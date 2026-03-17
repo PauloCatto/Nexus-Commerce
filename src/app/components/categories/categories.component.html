@@ -8,10 +8,10 @@
       </div>
       
       <div class="grid categories-grid">
-        <div class="category-card" *ngFor="let cat of categories">
+        <a [routerLink]="['/category', cat.name.toLowerCase()]" class="category-card" *ngFor="let cat of categories" style="text-decoration: none;">
           <img [src]="cat.image" [alt]="cat.name" class="category-img">
           <div class="category-overlay"></div>
           <h3 class="category-title">{{ cat.name }}</h3>
-        </div>
+        </a>
       </div>
     </section>

@@ -4,7 +4,7 @@
       </div>
       
       <div class="grid posts-grid">
-        <div class="post-card" *ngFor="let post of posts">
+        <a [routerLink]="['/post', post.title.replace(' ', '-').toLowerCase()]" class="post-card" *ngFor="let post of posts" style="text-decoration: none;">
           <div class="post-image-wrapper">
             <img [src]="post.image" [alt]="post.title" class="post-img">
           </div>
@@ -13,6 +13,6 @@
             <h3 class="post-title">{{ post.title }}</h3>
             <p class="post-excerpt">{{ post.excerpt }}</p>
           </div>
-        </div>
+        </a>
       </div>
     </section>

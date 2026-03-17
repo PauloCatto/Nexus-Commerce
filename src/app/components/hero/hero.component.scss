@@ -1,22 +1,4 @@
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-hero',
-  standalone: true,
-  template: `
-    <section class="hero container">
-      <div class="hero-content">
-        <span class="subtitle">Latest release</span>
-        <h1 class="title">Alienware M16</h1>
-        <p class="discount">UP TO 20% DISCOUNT</p>
-        <button class="btn-primary flex items-center gap-2">
-          Shop Now <span class="material-icons" style="font-size: 1.1rem">arrow_forward</span>
-        </button>
-      </div>
-    </section>
-  `,
-  styles: [`
-    .hero {
+.hero {
       background-color: var(--bg-card);
       border-radius: 12px;
       margin-top: 2rem;
@@ -50,6 +32,3 @@ import { Component } from '@angular/core';
       color: var(--text-secondary);
       margin-bottom: 2rem;
     }
-  `]
-})
-export class HeroComponent {}

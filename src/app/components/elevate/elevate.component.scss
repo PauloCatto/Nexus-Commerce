@@ -1,22 +1,4 @@
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-elevate',
-  standalone: true,
-  template: `
-    <section class="elevate container">
-      <div class="elevate-wrapper">
-        <div class="elevate-content">
-          <h2>Elevate Your Tech Experience</h2>
-          <p>Explore top-notch notebooks, headphones, and more. Elevate your tech game with products designed for excellence and style.</p>
-          <button class="btn-primary">Buy now</button>
-        </div>
-        <div class="elevate-image"></div>
-      </div>
-    </section>
-  `,
-  styles: [`
-    .elevate {
+.elevate {
       margin-top: 8rem;
     }
     .elevate-wrapper {
@@ -48,6 +30,3 @@ import { Component } from '@angular/core';
       border-radius: 8px;
       min-height: 400px;
     }
-  `]
-})
-export class ElevateComponent {}

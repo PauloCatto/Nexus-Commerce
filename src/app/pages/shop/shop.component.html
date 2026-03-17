@@ -8,21 +8,21 @@
 
   <div class="shop-content">
     <aside class="filters">
-      <h3>Filters</h3>
+      <h3>Categories</h3>
       <div class="filter-group">
-        <label>Category</label>
         <ul>
-          <li><input type="checkbox" checked> All</li>
-          <li><input type="checkbox"> Controllers</li>
-          <li><input type="checkbox"> Mouses</li>
-          <li><input type="checkbox"> Headsets</li>
-          <li><input type="checkbox"> Notebooks</li>
+          <li *ngFor="let cat of categories" 
+              (click)="setCategory(cat)" 
+              [class.active]="activeCategory === cat">
+            <span class="dot" *ngIf="activeCategory === cat"></span>
+            {{ cat }}
+          </li>
         </ul>
       </div>
     </aside>
 
     <div class="products-grid">
-      <a [routerLink]="['/product', prod.name.toLowerCase().replace(' ', '-')]" class="product-card" *ngFor="let prod of products">
+      <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card" *ngFor="let prod of filteredProducts">
         <div class="img-wrapper">
           <img [src]="prod.image" [alt]="prod.name">
         </div>

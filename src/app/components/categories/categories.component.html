@@ -9,7 +9,9 @@
       
       <div class="grid categories-grid">
         <div class="category-card" *ngFor="let cat of categories">
-          <h3>{{ cat }}</h3>
+          <img [src]="cat.image" [alt]="cat.name" class="category-img">
+          <div class="category-overlay"></div>
+          <h3 class="category-title">{{ cat.name }}</h3>
         </div>
       </div>
     </section>

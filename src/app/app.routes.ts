@@ -9,6 +9,6 @@ export const routes: Routes = [
   { path: 'contact', loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
   { path: 'product/:id', loadComponent: () => import('./pages/product-detail/product-detail').then(m => m.ProductDetail) },
   { path: 'category/:id', loadComponent: () => import('./pages/shop/shop').then(m => m.Shop) },
-  { path: 'post/:id', loadComponent: () => import('./pages/post-detail/post-detail').then(m => m.PostDetail) },
+  { path: 'post/:id', loadComponent: () => import('./pages/post-detail/post-detail.component').then(m => m.PostDetailComponent) },
   { path: '**', loadComponent: () => import('./pages/dummy/dummy').then(m => m.Dummy) },
 ];

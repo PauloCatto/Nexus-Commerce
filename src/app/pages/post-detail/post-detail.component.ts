@@ -11,7 +11,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss'
 })
-export class PostDetail implements OnInit {
+export class PostDetailComponent implements OnInit {
   post: any = null;
 
   allPosts = [
@@ -53,7 +53,7 @@ export class PostDetail implements OnInit {
     { 
       title: 'The Rise of Ultrawide Monitors',
       date: 'Feb 25, 2026',
-      image: 'https://images.unsplash.com/photo-1548092372-0d1bd40894a3?auto=format&fit=crop&q=80&w=1200',
+      image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1200',
       category: 'Displays',
       content: 'Once a niche for video editors, ultra-wide monitors are now dominating the desks of gamers and office workers alike. Is that extra screen real estate worth the cost?'
     }
@@ -64,7 +64,9 @@ export class PostDetail implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const slug = params['id'];
-      this.post = this.allPosts.find(p => p.title.toLowerCase().split(' ').join('-') === slug);
+      if (slug) {
+        this.post = this.allPosts.find(p => p.title.toLowerCase().split(' ').join('-') === slug);
+      }
     });
   }
 }

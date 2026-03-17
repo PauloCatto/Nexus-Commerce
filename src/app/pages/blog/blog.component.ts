@@ -52,7 +52,7 @@ export class BlogComponent {
       title: 'The Rise of Ultrawide Monitors',
       excerpt: 'Is a 21:9 aspect ratio worth the investment for your productivity and gaming needs?',
       date: 'Feb 25, 2026',
-      image: 'https://images.unsplash.com/photo-1593640495253-23196b27a03f?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800',
       category: 'Displays'
     }
   ];

@@ -1,22 +1,40 @@
 <header class="header">
-      <div class="container flex items-center justify-between">
-        <div class="logo" routerLink="/" style="cursor: pointer;">Nexus</div>
-        
-        <nav class="nav-links">
-          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-          <a routerLink="/shop" routerLinkActive="active">Shop</a>
-          <a routerLink="/story" routerLinkActive="active">Our Story</a>
-          <a routerLink="/blog" routerLinkActive="active">Blog</a>
-          <a routerLink="/contact" routerLinkActive="active">Contact Us</a>
-        </nav>
+  <div class="container flex items-center justify-between">
+    <div class="logo" routerLink="/" style="cursor: pointer;">Nexus</div>
+    
+    <nav class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/shop" routerLinkActive="active">Shop</a>
+      <a routerLink="/story" routerLinkActive="active">Our Story</a>
+      <a routerLink="/blog" routerLinkActive="active">Blog</a>
+      <a routerLink="/contact" routerLinkActive="active">Contact Us</a>
+    </nav>
 
-        <div class="actions flex items-center gap-6">
-          <div class="icons flex gap-4">
-            <span class="material-icons">search</span>
-            <span class="material-icons">favorite_border</span>
-            <span class="material-icons">shopping_cart</span>
-          </div>
-          <button class="btn-primary">Login</button>
+    <div class="actions flex items-center gap-6">
+      <div class="icons flex gap-4">
+        <span class="material-icons search-trigger" (click)="toggleSearch()">search</span>
+        
+        <div class="icon-badge" [routerLink]="['/wishlist']" [class.disabled]="cartService.getWishlistCount() === 0">
+          <span class="material-icons">{{ cartService.getWishlistCount() > 0 ? 'favorite' : 'favorite_border' }}</span>
+          <span class="badge" *ngIf="cartService.getWishlistCount() > 0">{{ cartService.getWishlistCount() }}</span>
+        </div>
+
+        <div class="icon-badge" [routerLink]="['/cart']">
+          <span class="material-icons">shopping_cart</span>
+          <span class="badge" *ngIf="cartService.getCartCount() > 0">{{ cartService.getCartCount() }}</span>
         </div>
       </div>
-    </header>
+      <button class="btn-primary" routerLink="/login">Login</button>
+    </div>
+  </div>
+
+  <div class="search-overlay" [class.active]="isSearchVisible">
+    <div class="search-container container">
+      <div class="search-input-wrapper">
+        <span class="material-icons search-icon">search</span>
+        <input type="text" placeholder="Search for products, brands or categories..." #searchInput (keyup.enter)="toggleSearch()">
+        <span class="material-icons close-icon" (click)="toggleSearch()">close</span>
+      </div>
+    </div>
+  </div>
+</header>

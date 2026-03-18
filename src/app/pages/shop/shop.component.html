@@ -2,7 +2,7 @@
 
 <main class="shop-page container">
   <header class="shop-header">
-    <h1>All Products</h1>
+    <h1>All <span class="highlight">Products</span></h1>
     <p>Discover our range of premium technological devices.</p>
   </header>
 
@@ -22,16 +22,26 @@
     </aside>
 
     <div class="products-grid">
-      <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card" *ngFor="let prod of filteredProducts">
-        <div class="img-wrapper">
-          <img [src]="prod.image" [alt]="prod.name">
-        </div>
-        <div class="info">
-          <h3>{{ prod.name }}</h3>
-          <p class="price">${{ prod.price }}</p>
-          <button class="btn-primary">View Details</button>
-        </div>
-      </a>
+      <div class="product-card-wrapper" *ngFor="let prod of filteredProducts">
+        <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card">
+          <div class="img-wrapper">
+            <img [src]="prod.image" [alt]="prod.name">
+            <button class="favorite-btn" [class.active]="cartService.isInWishlist(prod.name)" (click)="toggleWishlist(prod, $event)">
+              <span class="material-icons">{{ cartService.isInWishlist(prod.name) ? 'favorite' : 'favorite_border' }}</span>
+            </button>
+          </div>
+          <div class="info">
+            <span class="category-tag">{{ prod.category }}</span>
+            <h3>{{ prod.name }}</h3>
+            <div class="card-footer">
+              <p class="price">${{ prod.price }}</p>
+              <button class="add-cart-btn" (click)="addToCart(prod, $event)">
+                <span class="material-icons">shopping_bag</span>
+              </button>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </main>

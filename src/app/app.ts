@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NotificationComponent } from './shared/notification/notification.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  template: ` <router-outlet></router-outlet> `,
+  imports: [RouterOutlet, NotificationComponent],
+  template: `
+    <app-notification></app-notification>
+    <router-outlet></router-outlet>
+  `,
 })
 export class App {
   title = 'nexus-commerce';

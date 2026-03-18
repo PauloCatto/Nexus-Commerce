@@ -1,0 +1,105 @@
+<div class="auth-wrapper">
+  <div class="glow-bg"></div>
+  
+  <div class="auth-container">
+    <div class="logo-area" routerLink="/">
+      <span class="nexus-logo">Nexus</span>
+    </div>
+
+    <div class="auth-card">
+      <div class="card-header">
+        <h1>Create <span class="highlight">Account</span></h1>
+        <p>Join the elite Nexus community and access exclusive tech insights.</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm" class="auth-form">
+        <div class="input-group">
+          <label for="fullName">Full Name</label>
+          <div class="input-wrapper">
+            <span class="material-icons">person_outline</span>
+            <input 
+              type="text" 
+              id="fullName" 
+              name="fullName" 
+              placeholder="John Doe"
+              [(ngModel)]="registerData.fullName"
+              required
+              #fullName="ngModel"
+            >
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <span class="material-icons">alternate_email</span>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="name@example.com"
+              [(ngModel)]="registerData.email"
+              required
+              #email="ngModel"
+            >
+          </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="input-group">
+              <label for="password">Password</label>
+              <div class="input-wrapper">
+                <span class="material-icons">lock_outline</span>
+                <input 
+                  type="password" 
+                  id="password" 
+                  name="password" 
+                  placeholder="••••••••"
+                  [(ngModel)]="registerData.password"
+                  required
+                  #password="ngModel"
+                >
+              </div>
+            </div>
+    
+            <div class="input-group">
+              <label for="confirmPassword">Confirm</label>
+              <div class="input-wrapper">
+                <span class="material-icons">security</span>
+                <input 
+                  type="password" 
+                  id="confirmPassword" 
+                  name="confirmPassword" 
+                  placeholder="••••••••"
+                  [(ngModel)]="registerData.confirmPassword"
+                  required
+                  #confirmPassword="ngModel"
+                >
+              </div>
+            </div>
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-container">
+            <input type="checkbox" name="terms" [(ngModel)]="registerData.termsAccepted" required>
+            <span class="checkmark"></span>
+            I agree to the <a routerLink="/terms" class="inline-link">Terms of Service</a>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary auth-submit" [disabled]="!registerForm.form.valid || registerData.password !== registerData.confirmPassword">
+          Create Account
+          <span class="material-icons">rocket_launch</span>
+        </button>
+      </form>
+
+      <div class="card-footer">
+        <p>Already a member? <a routerLink="/login" class="highlight-link">Login now</a></p>
+      </div>
+    </div>
+    
+    <div class="back-home">
+        <a routerLink="/"><span class="material-icons">west</span> Return to Home</a>
+    </div>
+  </div>
+</div>

@@ -2,21 +2,19 @@
 
 <main class="product-page container" *ngIf="product">
   <div class="product-layout">
-    <!-- Left: Product Image -->
     <div class="product-gallery">
       <div class="main-image-wrapper">
         <img [src]="product.image" [alt]="product.name" class="main-prod-img">
       </div>
     </div>
 
-    <!-- Right: Product Info -->
     <div class="product-details">
       <nav class="breadcrumb">
         <a routerLink="/">Home</a> / <a routerLink="/shop">Products</a> / {{ product.name }}
       </nav>
 
       <h1 class="product-title">{{ product.name }}</h1>
-      <p class="product-subtitle">{{ product.subtitle }}</p>
+      <p class="product-subtitle" *ngIf="product.subtitle">{{ product.subtitle }}</p>
 
       <div class="product-price-row">
         <span class="price-val">${{ product.price }}</span>
@@ -38,20 +36,18 @@
 
       <div class="actions">
         <div class="quantity-picker">
-          <button class="qty-btn">-</button>
-          <span class="qty-val">1</span>
-          <button class="qty-btn">+</button>
+          <button class="qty-btn" (click)="updateQty(-1)">-</button>
+          <span class="qty-val">{{ selectedQuantity }}</span>
+          <button class="qty-btn" (click)="updateQty(1)">+</button>
         </div>
-        <button class="btn-primary add-to-cart-btn">
+        <button class="btn-primary add-to-cart-btn" (click)="addToCart()">
           Add to Cart
           <span class="material-icons">shopping_cart</span>
         </button>
+        <button class="btn-outline favorite-btn-square" [class.active]="cartService.isInWishlist(product.name)" (click)="toggleWishlist()" [title]="cartService.isInWishlist(product.name) ? 'Remove from Wishlist' : 'Add to Wishlist'">
+          <span class="material-icons">{{ cartService.isInWishlist(product.name) ? 'favorite' : 'favorite_border' }}</span>
+        </button>
       </div>
-      
-      <button class="btn-outline favorite-btn">
-        <span class="material-icons">favorite_border</span>
-        Add to Wishlist
-      </button>
     </div>
   </div>
 </main>

@@ -1,0 +1,84 @@
+<div class="auth-wrapper">
+  <div class="glow-bg"></div>
+  
+  <div class="auth-container">
+    <div class="logo-area" routerLink="/">
+      <span class="nexus-logo">Nexus</span>
+    </div>
+
+    <div class="auth-card">
+      <div class="card-header">
+        <h1>Welcome <span class="highlight">Back</span></h1>
+        <p>Login to your elite account to continue your journey.</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="auth-form">
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <span class="material-icons">alternate_email</span>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="name@example.com"
+              [(ngModel)]="loginData.email"
+              required
+              #email="ngModel"
+            >
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Security Password</label>
+          <div class="input-wrapper">
+            <span class="material-icons">lock_outline</span>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="••••••••••••"
+              [(ngModel)]="loginData.password"
+              required
+              #password="ngModel"
+            >
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-container">
+            <input type="checkbox" name="rememberMe" [(ngModel)]="loginData.rememberMe">
+            <span class="checkmark"></span>
+            Stay signed in
+          </label>
+          <a routerLink="/forgot-password" class="forgot-link">Recover password</a>
+        </div>
+
+        <button type="submit" class="btn-primary auth-submit" [disabled]="!loginForm.form.valid">
+          Authenticate
+          <span class="material-icons">arrow_forward</span>
+        </button>
+
+        <div class="social-login">
+          <p>Or continue with elite providers</p>
+          <div class="social-btns">
+            <button type="button" class="social-btn">
+              <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+            </button>
+            <button type="button" class="social-btn">
+              <span class="material-icons">apple</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="card-footer">
+        <p>New to Nexus? <a routerLink="/register" class="highlight-link">Create elite account</a></p>
+      </div>
+    </div>
+    
+    <div class="back-home">
+        <a routerLink="/"><span class="material-icons">west</span> Return to Home</a>
+    </div>
+  </div>
+</div>

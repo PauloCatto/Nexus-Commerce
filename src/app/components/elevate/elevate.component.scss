@@ -1,46 +1,116 @@
 .elevate {
-      margin-top: 8rem;
-    }
-    .elevate-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: stretch;
-      gap: 4rem;
-    }
-    .elevate-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
-    h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-    p {
-      color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.6;
-      max-width: 90%;
-    }
-    .elevate-image {
-      border-radius: 12px;
-      min-height: 400px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-    .elevate-image img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .elevate-wrapper:hover .elevate-image img {
-      transform: scale(1.05);
-    }
+  margin-top: 10rem;
+}
+
+.elevate-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: 6rem;
+}
+
+.elevate-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  animation: slideLeft 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+h2 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -3px;
+  color: #fff;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 90%;
+}
+
+.elevate-image {
+  border-radius: 32px;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.elevate-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.elevate-wrapper:hover .elevate-image img {
+  transform: scale(1.08);
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@media (max-width: 1024px) {
+  .elevate-wrapper {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    text-align: center;
+  }
+  
+  .elevate-content {
+    align-items: center;
+    order: 2;
+  }
+
+  h2 {
+    font-size: 2.75rem;
+    letter-spacing: -2px;
+  }
+
+  p {
+    max-width: 100%;
+  }
+
+  .elevate-image {
+    height: 400px;
+    order: 1;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .elevate {
+    margin-top: 6rem;
+  }
+  
+  h2 {
+    font-size: 2.25rem;
+  }
+  
+  .elevate-image {
+    height: 300px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .elevate {
+    margin-top: 5rem;
+  }
+  
+  h2 {
+    font-size: 1.85rem;
+    letter-spacing: -1px;
+  }
+}

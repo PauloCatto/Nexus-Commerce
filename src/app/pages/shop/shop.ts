@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { CartService, Product } from '../../services/cart.service';
 
 @Component({
   selector: 'app-shop',
@@ -15,7 +16,7 @@ export class Shop implements OnInit {
   activeCategory: string = 'All';
   categories: string[] = ['All', 'Smartphone', 'Notebooks', 'Controller', 'Mouse', 'Headset', 'Keyboard'];
 
-  allProducts = [
+  allProducts: Product[] = [
     { name: 'Razer Wolverine V2 Pro', price: '44.00', image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?auto=format&fit=crop&q=80&w=600', category: 'Controller' },
     { name: 'Razer DeathAdder V2', price: '60.00', image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=600&auto=format&fit=crop', category: 'Mouse' },
     { name: 'Razer BlackShark V2 X', price: '80.00', image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=600', category: 'Headset' },
@@ -30,9 +31,12 @@ export class Shop implements OnInit {
     { name: 'MacBook Air M2', price: '1199.00', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop', category: 'Notebooks' }
   ];
 
-  filteredProducts = this.allProducts;
+  filteredProducts: Product[] = this.allProducts;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    public cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -52,5 +56,17 @@ export class Shop implements OnInit {
     } else {
       this.filteredProducts = this.allProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
     }
+  }
+
+  addToCart(product: Product, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.cartService.addToCart(product);
+  }
+
+  toggleWishlist(product: Product, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.cartService.toggleWishlist(product);
   }
 }

@@ -1,17 +1,20 @@
-<header class="header">
-  <div class="container flex items-center justify-between">
+<header class="header" [class.menu-open]="isMenuOpen">
+  <div class="container header-inner flex items-center justify-between">
     <div class="logo" routerLink="/" style="cursor: pointer;">Nexus</div>
     
-    <nav class="nav-links">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-      <a routerLink="/shop" routerLinkActive="active">Shop</a>
-      <a routerLink="/story" routerLinkActive="active">Our Story</a>
-      <a routerLink="/blog" routerLinkActive="active">Blog</a>
-      <a routerLink="/contact" routerLinkActive="active">Contact Us</a>
+    <nav class="nav-links" [class.open]="isMenuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false">Home</a>
+      <a routerLink="/shop" routerLinkActive="active" (click)="isMenuOpen = false">Shop</a>
+      <a routerLink="/story" routerLinkActive="active" (click)="isMenuOpen = false">Our Story</a>
+      <a routerLink="/blog" routerLinkActive="active" (click)="isMenuOpen = false">Blog</a>
+      <a routerLink="/contact" routerLinkActive="active" (click)="isMenuOpen = false">Contact Us</a>
+      <div class="mobile-only-auth">
+        <button class="btn-primary w-full" routerLink="/login" (click)="isMenuOpen = false">Login Account</button>
+      </div>
     </nav>
 
     <div class="actions flex items-center gap-6">
-      <div class="icons flex gap-4">
+      <div class="icons flex items-center gap-4">
         <span class="material-icons search-trigger" (click)="toggleSearch()">search</span>
         
         <div class="icon-badge" [routerLink]="['/wishlist']" [class.disabled]="cartService.getWishlistCount() === 0">
@@ -24,7 +27,12 @@
           <span class="badge" *ngIf="cartService.getCartCount() > 0">{{ cartService.getCartCount() }}</span>
         </div>
       </div>
-      <button class="btn-primary" routerLink="/login">Login</button>
+      
+      <button class="btn-primary desktop-only" routerLink="/login">Login</button>
+      
+      <button class="mobile-menu-toggle" (click)="toggleMenu()">
+        <span class="material-icons">{{ isMenuOpen ? 'close' : 'menu' }}</span>
+      </button>
     </div>
   </div>
 
@@ -32,7 +40,7 @@
     <div class="search-container container">
       <div class="search-input-wrapper">
         <span class="material-icons search-icon">search</span>
-        <input type="text" placeholder="Search for products, brands or categories..." #searchInput (keyup.enter)="toggleSearch()">
+        <input type="text" placeholder="Search for products..." #searchInput (keyup.enter)="toggleSearch()">
         <span class="material-icons close-icon" (click)="toggleSearch()">close</span>
       </div>
     </div>

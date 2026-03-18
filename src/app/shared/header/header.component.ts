@@ -12,10 +12,17 @@ import { CartService } from '../../services/cart.service';
 })
 export class HeaderComponent {
   isSearchVisible: boolean = false;
+  isMenuOpen: boolean = false;
   
   constructor(public cartService: CartService) {}
 
   toggleSearch() {
     this.isSearchVisible = !this.isSearchVisible;
+    if (this.isSearchVisible) this.isMenuOpen = false;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen) this.isSearchVisible = false;
   }
 }

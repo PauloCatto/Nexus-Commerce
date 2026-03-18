@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+<main class="cart-page container">
+  <header class="cart-header">
+    <span class="badge">Nexus Checkout</span>
+    <h1>Elite <span class="highlight">Selections</span></h1>
+    <p *ngIf="cartItems.length > 0" class="cart-count-desc">Precisely curated. {{ cartItems.length }} premium items await you.</p>
+  </header>
+
+  <div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <div class="item-img">
+          <img [src]="item.image" [alt]="item.name">
+        </div>
+        <div class="item-info">
+          <h3>{{ item.name }}</h3>
+          <p class="category">{{ item.category }}</p>
+        </div>
+        <div class="item-quantity">
+          <div class="qty-picker-small">
+            <button class="qty-mini-btn" (click)="updateQuantity(item.name, -1)">-</button>
+            <span class="qty-val">{{ item.quantity }}</span>
+            <button class="qty-mini-btn" (click)="updateQuantity(item.name, 1)">+</button>
+          </div>
+        </div>
+        <div class="item-price">
+          ${{ (parseFloat(item.price) * (item.quantity || 1)).toFixed(2) }}
+        </div>
+        <button class="remove-btn" (click)="confirmRemove(item.name)">
+          <span class="material-icons">delete_outline</span>
+        </button>
+      </div>
+    </div>
+
+    <aside class="cart-summary">
+      <h3>Order Summary</h3>
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span>${{ total.toFixed(2) }}</span>
+      </div>
+      <div class="summary-line">
+        <span>Shipping</span>
+        <span class="free">Free</span>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span>${{ total.toFixed(2) }}</span>
+      </div>
+      <button class="btn-primary checkout-btn">Proceed to Checkout</button>
+      <a routerLink="/shop" class="continue-shopping">
+        <span class="material-icons">arrow_back</span>
+        Continue Shopping
+      </a>
+    </aside>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-state">
+      <div class="glow-icon">
+        <span class="material-icons">shopping_bag</span>
+      </div>
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven't added anything to your cart yet.</p>
+      <button routerLink="/shop" class="btn-primary">Start Shopping</button>
+    </div>
+  </ng-template>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" [class.active]="itemToRemove !== null">
+    <div class="modal">
+      <span class="material-icons info-icon">error_outline</span>
+      <h3>Wait a moment...</h3>
+      <p>Are you sure you want to remove <strong>{{ itemToRemove }}</strong> from your selection?</p>
+      <div class="modal-actions">
+        <button class="btn-outline" (click)="cancelRemove()">No, Keep it</button>
+        <button class="btn-primary remove-confirm" (click)="doRemove()">Yes, Remove</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>

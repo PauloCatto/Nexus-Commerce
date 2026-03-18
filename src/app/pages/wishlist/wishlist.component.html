@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<main class="wishlist-page container">
+  <header class="wishlist-header">
+    <span class="badge">Nexus Collection</span>
+    <h1>Curated <span class="highlight">Favorites</span></h1>
+    <p *ngIf="wishlistItems.length > 0">Your future setup, saved for the right moment.</p>
+  </header>
+
+  <div class="wishlist-grid" *ngIf="wishlistItems.length > 0; else emptyWishlist">
+    <div class="product-card" *ngFor="let prod of wishlistItems">
+      <div class="img-wrapper">
+        <img [src]="prod.image" [alt]="prod.name">
+        <button class="favorite-btn active" (click)="toggleFavorite(prod)">
+          <span class="material-icons">favorite</span>
+        </button>
+      </div>
+      <div class="info">
+        <h3>{{ prod.name }}</h3>
+        <p class="price">${{ prod.price }}</p>
+        <div class="card-actions">
+           <button class="btn-primary add-cart" (click)="addToCart(prod)">
+             Add to Cart
+           </button>
+           <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="view-link">
+             View Info
+           </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyWishlist>
+    <div class="empty-state">
+      <div class="glow-icon">
+        <span class="material-icons">favorite_border</span>
+      </div>
+      <h2>Your wishlist is empty</h2>
+      <p>Save items you love here to find them easily later.</p>
+      <button routerLink="/shop" class="btn-primary">Explore Products</button>
+    </div>
+  </ng-template>
+</main>
+
+<app-footer></app-footer>

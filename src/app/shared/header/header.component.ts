@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -10,4 +10,12 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  isSearchVisible: boolean = false;
+  
+  constructor(public cartService: CartService) {}
+
+  toggleSearch() {
+    this.isSearchVisible = !this.isSearchVisible;
+  }
+}

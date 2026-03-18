@@ -1,0 +1,90 @@
+<app-header></app-header>
+
+<main class="contact-page">
+  <!-- Hero Section -->
+  <section class="contact-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Let's Start a <span class="highlight">Conversation</span></h1>
+        <p>Whether you have a question about products, tech specs, or anything else, our team is ready to help.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Grid -->
+  <section class="contact-info container">
+    <div class="info-grid">
+      <div class="info-card fade-in">
+        <span class="material-icons info-icon">email</span>
+        <h3>Email Us</h3>
+        <p>Our support team is here to help with any technical inquiries.</p>
+        <a href="mailto:support@nexus.tech" class="info-link">support@nexus.tech</a>
+      </div>
+      <div class="info-card fade-in" style="animation-delay: 0.1s;">
+        <span class="material-icons info-icon">call</span>
+        <h3>Call Us</h3>
+        <p>Talk to our experts about our latest high-performance gear.</p>
+        <a href="tel:+1234567890" class="info-link">+1 (234) 567-890</a>
+      </div>
+      <div class="info-card fade-in" style="animation-delay: 0.2s;">
+        <span class="material-icons info-icon">location_on</span>
+        <h3>Visit Us</h3>
+        <p>Experience Nexus products in person at our flagship labs.</p>
+        <a href="#" class="info-link">Silicon Valley, CA</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form Section -->
+  <section class="form-section container">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h2>Send us a Message</h2>
+        <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+      </div>
+
+      <div class="success-message" *ngIf="submitted">
+        <span class="material-icons done-icon">check_circle</span>
+        <h3>Message Sent Successfully!</h3>
+        <p>Thank you for reaching out. We'll be in touch soon.</p>
+      </div>
+
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!submitted">
+        <div class="form-row">
+          <div class="input-group">
+            <input type="text" formControlName="name" placeholder="Full Name">
+            <label>Name</label>
+            <div class="error-msg" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.errors?.['required']">Name is required.</div>
+            <div class="error-msg" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.errors?.['minlength']">Min 3 characters.</div>
+          </div>
+          <div class="input-group">
+            <input type="email" formControlName="email" placeholder="Email Address">
+            <label>Email</label>
+            <div class="error-msg" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.errors?.['required']">Email is required.</div>
+            <div class="error-msg" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.errors?.['email']">Invalid email format.</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <input type="text" formControlName="subject" placeholder="Subject">
+          <label>Subject</label>
+          <div class="error-msg" *ngIf="contactForm.get('subject')?.touched && contactForm.get('subject')?.errors?.['required']">Subject is required.</div>
+        </div>
+
+        <div class="input-group">
+          <textarea formControlName="message" rows="5" placeholder="Your Message..."></textarea>
+          <label>Message</label>
+          <div class="error-msg" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.errors?.['required']">Message is required.</div>
+          <div class="error-msg" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.errors?.['minlength']">Min 10 characters.</div>
+        </div>
+
+        <button type="submit" class="btn-primary" [disabled]="contactForm.invalid">
+          Send Message
+          <span class="material-icons">send</span>
+        </button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<main class="post-detail-page" *ngIf="post">
+  <article class="container">
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">{{ post.category }}</span>
+        <span class="dot"></span>
+        <span class="post-date">{{ post.date }}</span>
+      </div>
+      <h1>{{ post.title }}</h1>
+    </header>
+
+    <div class="post-image">
+      <img [src]="post.image" [alt]="post.title">
+    </div>
+
+    <div class="post-body">
+      <p class="lead">{{ post.content }}</p>
+      
+      <p>In addition to these developments, it's clear that the intersection of hardware and software performance is more critical than ever. We're seeing a shift where raw specs are being augmented by AI-driven optimizations, making devices feel even more responsive than their numbers might suggest.</p>
+      
+      <p>As we look forward to the second half of 2024, Nexus remains committed to bringing you the absolute best in tech journalism and product reviews. Stay tuned for our deep dives into the next generation of gadgets.</p>
+    </div>
+
+    <footer class="post-footer">
+      <a routerLink="/blog" class="back-link">
+        <span class="material-icons">arrow_back</span>
+        Back to Blog
+      </a>
+    </footer>
+  </article>
+</main>
+
+<app-footer></app-footer>

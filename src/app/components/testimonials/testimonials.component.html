@@ -1,0 +1,27 @@
+<section class="testimonials-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>What our customers say</h2>
+          <div class="nav-arrows flex gap-2">
+            <button class="arrow-btn"><span class="material-icons">chevron_left</span></button>
+            <button class="arrow-btn active"><span class="material-icons">chevron_right</span></button>
+          </div>
+        </div>
+        
+        <div class="grid testimonials-grid">
+          <div class="testimonial-card" *ngFor="let t of [1,2,3]">
+            <div class="stars flex gap-2 mb-4">
+              <span class="material-icons" *ngFor="let s of [1,2,3,4,5]">star</span>
+            </div>
+            <p>"Nexus transformed my tech experience! The notebooks are powerful, and the headphones are top-notch. Quick shipping and excellent customer service. Highly recommended!"</p>
+            <div class="user-info flex items-center gap-4 mt-6">
+              <div class="avatar"></div>
+              <div>
+                <h4>Leslie Alexander</h4>
+                <p class="role">Model</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

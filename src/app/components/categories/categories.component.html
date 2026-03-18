@@ -1,0 +1,17 @@
+<section class="categories container">
+      <div class="section-title">
+        <h2>Shop by categories</h2>
+        <div class="nav-arrows flex gap-2">
+          <button class="arrow-btn"><span class="material-icons">chevron_left</span></button>
+          <button class="arrow-btn active"><span class="material-icons">chevron_right</span></button>
+        </div>
+      </div>
+      
+      <div class="grid categories-grid">
+        <a [routerLink]="['/category', cat.name.toLowerCase()]" class="category-card" *ngFor="let cat of categories" style="text-decoration: none;">
+          <img [src]="cat.image" [alt]="cat.name" class="category-img">
+          <div class="category-overlay"></div>
+          <h3 class="category-title">{{ cat.name }}</h3>
+        </a>
+      </div>
+    </section>

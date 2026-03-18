@@ -1,0 +1,30 @@
+.header {
+      padding: 1.5rem 0;
+      background-color: transparent;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+    }
+    .nav-links a.active, .nav-links a:hover {
+      color: var(--text-primary);
+    }
+    .icons span {
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: color 0.2s;
+    }
+    .icons span:hover {
+      color: var(--accent-color);
+    }

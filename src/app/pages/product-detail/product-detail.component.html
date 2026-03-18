@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+<main class="product-page container" *ngIf="product">
+  <div class="product-layout">
+    <!-- Left: Product Image -->
+    <div class="product-gallery">
+      <div class="main-image-wrapper">
+        <img [src]="product.image" [alt]="product.name" class="main-prod-img">
+      </div>
+    </div>
+
+    <!-- Right: Product Info -->
+    <div class="product-details">
+      <nav class="breadcrumb">
+        <a routerLink="/">Home</a> / <a routerLink="/shop">Products</a> / {{ product.name }}
+      </nav>
+
+      <h1 class="product-title">{{ product.name }}</h1>
+      <p class="product-subtitle">{{ product.subtitle }}</p>
+
+      <div class="product-price-row">
+        <span class="price-val">${{ product.price }}</span>
+        <span class="stock-badge">In Stock</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="product-description">
+        {{ product.description }}
+      </p>
+
+      <div class="specs-grid" *ngIf="product.specs">
+        <div class="spec-item" *ngFor="let spec of product.specs">
+          <span class="label">{{ spec.label }}:</span>
+          <span class="value">{{ spec.value }}</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="quantity-picker">
+          <button class="qty-btn">-</button>
+          <span class="qty-val">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+        <button class="btn-primary add-to-cart-btn">
+          Add to Cart
+          <span class="material-icons">shopping_cart</span>
+        </button>
+      </div>
+      
+      <button class="btn-outline favorite-btn">
+        <span class="material-icons">favorite_border</span>
+        Add to Wishlist
+      </button>
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>

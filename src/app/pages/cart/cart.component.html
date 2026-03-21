@@ -17,7 +17,7 @@
           <h3>{{ item.name }}</h3>
           <p class="category">{{ item.category }}</p>
         </div>
-        <div class="item-quantity">
+        <div class="item-quantity" [attr.data-price]="'$' + (parseFloat(item.price) * (item.quantity || 1)).toFixed(2)">
           <div class="qty-picker-small">
             <button class="qty-mini-btn" (click)="updateQuantity(item.name, -1)">-</button>
             <span class="qty-val">{{ item.quantity }}</span>

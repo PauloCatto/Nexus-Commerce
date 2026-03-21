@@ -6,6 +6,17 @@
     <p>Discover our range of premium technological devices.</p>
   </header>
 
+  <div class="mobile-filters">
+    <div class="filter-chips">
+      <div *ngFor="let cat of categories" 
+            (click)="setCategory(cat)" 
+            [class.active]="activeCategory === cat"
+            class="chip">
+        {{ cat }}
+      </div>
+    </div>
+  </div>
+
   <div class="shop-content">
     <aside class="filters">
       <h3>Categories</h3>

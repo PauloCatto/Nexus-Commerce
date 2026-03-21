@@ -150,8 +150,8 @@
     height: 100vh;
     background: #0a0f1a;
     flex-direction: column;
-    padding: 8rem 2.5rem;
-    gap: 1.5rem;
+    padding: 6rem 2rem;
+    gap: 1.25rem;
     transform: translateX(100%);
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1000;
@@ -161,14 +161,16 @@
     }
 
     a {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
+      font-size: 1.5rem; /* Reduced from 2rem */
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
 
     .mobile-only-auth {
       display: block;
-      button { height: 60px; font-size: 1.1rem; border-radius: 16px; }
+      padding-top: 1.5rem;
+      margin-top: 0.5rem;
+      button { height: 54px; font-size: 1rem; border-radius: 14px; }
     }
   }
 

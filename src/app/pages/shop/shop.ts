@@ -27,7 +27,7 @@ export class Shop implements OnInit {
     { name: 'Logitech G502 LIGHTSPEED', price: '119.00', image: 'https://images.unsplash.com/photo-1605773527852-c546a8584ea3?q=80&w=800&auto=format&fit=crop', category: 'Mouse' },
     { name: 'SteelSeries Apex Pro', price: '199.00', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=600', category: 'Keyboard' },
     { name: 'Sony WH-1000XM5', price: '349.00', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=600', category: 'Headset' },
-    { name: 'iPad Pro 12.9', price: '1099.00', image: 'https://images.unsplash.com/photo-1544244015-0cd42c4ae7f0?q=80&w=800&auto=format&fit=crop', category: 'Smartphone' },
+    { name: 'iPad Pro 12.9', price: '1099.00', image: '/ipad-pro.png', category: 'Smartphone' },
     { name: 'MacBook Air M2', price: '1199.00', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop', category: 'Notebooks' }
   ];
 

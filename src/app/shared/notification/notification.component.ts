@@ -9,11 +9,13 @@ import { NotificationService, Notification } from '../../services/notification.s
   template: `
     <div class="notification-container">
       <div *ngFor="let n of notifications; trackBy: trackById" 
-           class="toast" [class]="n.type"
-           (click)="remove(n.id)">
+           class="toast" [class]="n.type">
         <div class="toast-content">
           <span class="material-icons icon">{{ n.type === 'success' ? 'check_circle' : n.type === 'error' ? 'error' : 'info' }}</span>
           <p class="message">{{ n.message }}</p>
+          <button class="close-toast-btn" (click)="remove(n.id)">
+            <span class="material-icons">close</span>
+          </button>
         </div>
         <div class="progress-bar"></div>
       </div>
@@ -56,6 +58,29 @@ import { NotificationService, Notification } from '../../services/notification.s
       display: flex;
       align-items: center;
       gap: 1rem;
+      flex: 1;
+    }
+    .close-toast-btn {
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      padding: 0.25rem;
+      border-radius: 6px;
+      
+      &:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .material-icons {
+        font-size: 1.15rem;
+      }
     }
     .icon {
       font-size: 1.5rem;

@@ -4,7 +4,7 @@
       </div>
       
       <div class="grid bestsellers-grid">
-        <a [routerLink]="['/product', prod.name.replace(' ', '-').toLowerCase()]" class="product-card" *ngFor="let prod of products" style="text-decoration: none;">
+        <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card" *ngFor="let prod of products" style="text-decoration: none;">
           <div class="img-wrapper">
             <img [src]="prod.image" [alt]="prod.name" class="product-img">
           </div>

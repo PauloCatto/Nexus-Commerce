@@ -161,7 +161,7 @@ export class ProductDetail implements OnInit {
     { 
       name: 'iPad Pro 12.9', 
       price: '1099.00', 
-      image: 'https://images.unsplash.com/photo-1544244015-0cd42c4ae7f0?q=80&w=1000&auto=format&fit=crop', 
+      image: '/ipad-pro.png', 
       category: 'Smartphone',
       // @ts-ignore
       subtitle: 'The ultimate iPad experience. Now with M2.',

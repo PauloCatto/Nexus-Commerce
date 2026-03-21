@@ -280,6 +280,35 @@
     transform: scale(0.9);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
+    position: relative; /* Added for absolute positioning of close btn */
+
+    .close-modal-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        transform: rotate(90deg) scale(1.1);
+      }
+
+      .material-icons {
+        font-size: 1.35rem; /* Increased size */
+      }
+    }
 
     .info-icon {
       font-size: 4rem;
@@ -330,5 +359,83 @@
 @media (max-width: 992px) {
   .cart-container {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 6rem 0 4rem;
+  }
+
+  .cart-header {
+    margin-bottom: 3rem;
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: -1px;
+    }
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 40px;
+    grid-template-areas: 
+      "img info remove"
+      "img actions actions";
+    gap: 1rem;
+    padding: 1rem;
+    align-items: flex-start;
+
+    .item-img {
+      grid-area: img;
+      width: 80px;
+      height: 80px;
+    }
+
+    .item-info {
+      grid-area: info;
+      h3 { font-size: 1.1rem; margin-bottom: 0.1rem; }
+    }
+
+    .remove-btn {
+      grid-area: remove;
+      justify-self: flex-end;
+      padding: 0.5rem;
+    }
+
+    .item-quantity {
+      grid-area: actions;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.25rem;
+      width: 100%;
+      
+      &::after {
+          content: attr(data-price);
+          font-weight: 800;
+          font-size: 1.15rem;
+          color: var(--primary-color);
+      }
+    }
+
+    .item-price {
+      display: none; /* Hidden on mobile as we show it in actions area */
+    }
+  }
+
+  .summary-total {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-header h1 {
+    font-size: 2rem;
+  }
+  
+  .cart-summary {
+    padding: 1.5rem;
+    h3 { font-size: 1.25rem; margin-bottom: 1.5rem; }
   }
 }

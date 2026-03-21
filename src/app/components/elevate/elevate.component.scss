@@ -106,11 +106,11 @@ p {
 
 @media (max-width: 480px) {
   .elevate {
-    margin-top: 5rem;
+    margin-top: 4rem;
   }
   
   h2 {
-    font-size: 1.85rem;
-    letter-spacing: -1px;
+    font-size: 1.65rem; /* Reduced from 1.85rem */
+    letter-spacing: -0.5px;
   }
 }

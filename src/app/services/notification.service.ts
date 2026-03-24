@@ -20,7 +20,6 @@ export class NotificationService {
     const current = this.notifications.value;
     this.notifications.next([...current, { message, type, id }]);
 
-    // Auto remove after 3 seconds
     setTimeout(() => {
       this.remove(id);
     }, 3000);

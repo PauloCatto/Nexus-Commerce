@@ -1,9 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
-import { CartService, Product } from '../../services/cart.service';
+import { CartService } from '../../services/cart.service';
+import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -22,27 +23,36 @@ export class Shop implements OnInit {
   isLoadingProducts = true;
 
   private productService = inject(ProductService);
+  private cdr = inject(ChangeDetectorRef);
+  private ngZone = inject(NgZone);
 
   constructor(
     private route: ActivatedRoute,
     public cartService: CartService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      this.allProducts = await this.productService.getProducts();
+      const products = await this.productService.getProducts();
+      this.ngZone.run(() => {
+        this.allProducts = products;
+        this.isLoadingProducts = false;
+        this.applyFilter();
+
+        this.route.params.subscribe(params => {
+          const categoryId = params['id'];
+          if (categoryId) {
+            this.setCategory(categoryId.charAt(0).toUpperCase() + categoryId.slice(1));
+          }
+        });
+
+        this.cdr.detectChanges();
+      });
     } catch (err) {
       console.error(err);
-    } finally {
-      this.isLoadingProducts = false;
-      
-      this.route.params.subscribe(params => {
-        const categoryId = params['id'];
-        if (categoryId) {
-          this.setCategory(categoryId.charAt(0).toUpperCase() + categoryId.slice(1));
-        } else {
-          this.setCategory('All');
-        }
+      this.ngZone.run(() => {
+        this.isLoadingProducts = false;
+        this.cdr.detectChanges();
       });
     }
   }

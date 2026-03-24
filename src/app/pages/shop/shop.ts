@@ -31,7 +31,10 @@ export class Shop implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.allProducts = await this.productService.getProducts();
-      this.filteredProducts = this.allProducts;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      this.isLoadingProducts = false;
       
       this.route.params.subscribe(params => {
         const categoryId = params['id'];
@@ -41,19 +44,19 @@ export class Shop implements OnInit {
           this.setCategory('All');
         }
       });
-    } catch (error) {
-      console.error('Error loading products from Firebase:', error);
-    } finally {
-      this.isLoadingProducts = false;
     }
   }
 
   setCategory(category: string): void {
     this.activeCategory = category;
-    if (category === 'All') {
+    this.applyFilter();
+  }
+
+  applyFilter(): void {
+    if (this.activeCategory === 'All') {
       this.filteredProducts = this.allProducts;
     } else {
-      this.filteredProducts = this.allProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
+      this.filteredProducts = this.allProducts.filter(p => p.category.toLowerCase() === this.activeCategory.toLowerCase());
     }
   }
 

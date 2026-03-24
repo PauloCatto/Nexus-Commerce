@@ -7,7 +7,20 @@
     <p>Dive into the world of professional tech, gaming setups, and productivity guides.</p>
   </header>
 
-  <div class="blog-grid">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state" style="text-align: center; padding: 6rem 0; color: #ccc;">
+    <span class="material-icons" style="font-size: 4rem; animation: spin 2s linear infinite;">sync</span>
+    <p style="margin-top: 1rem; font-size: 1.2rem;">Fetching articles from backend...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && posts.length === 0" style="text-align: center; padding: 6rem 0; color: #ccc;">
+    <span class="material-icons" style="font-size: 4rem;">article</span>
+    <p style="margin-top: 1rem; font-size: 1.2rem;">No articles found. Add posts to the Firebase "posts" collection.</p>
+  </div>
+
+  <!-- Posts Grid -->
+  <div class="blog-grid" *ngIf="!isLoading && posts.length > 0">
     <a [routerLink]="['/post', post.title.toLowerCase().split(' ').join('-')]" class="post-card" *ngFor="let post of posts">
       <div class="post-image-wrapper">
         <img [src]="post.image" [alt]="post.title" class="post-img">

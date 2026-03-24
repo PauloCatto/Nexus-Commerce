@@ -1,7 +1,7 @@
 <header class="header" [class.menu-open]="isMenuOpen">
   <div class="container header-inner flex items-center justify-between">
     <div class="logo" routerLink="/" style="cursor: pointer;">Nexus</div>
-    
+
     <nav class="nav-links" [class.open]="isMenuOpen">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false">Home</a>
       <a routerLink="/shop" routerLinkActive="active" (click)="isMenuOpen = false">Shop</a>
@@ -22,7 +22,7 @@
     <div class="actions flex items-center gap-6">
       <div class="icons flex items-center gap-4">
         <span class="material-icons search-trigger" (click)="toggleSearch()">search</span>
-        
+
         <div class="icon-badge" [routerLink]="['/wishlist']" [class.disabled]="cartService.getWishlistCount() === 0">
           <span class="material-icons">{{ cartService.getWishlistCount() > 0 ? 'favorite' : 'favorite_border' }}</span>
           <span class="badge" *ngIf="cartService.getWishlistCount() > 0">{{ cartService.getWishlistCount() }}</span>
@@ -33,28 +33,71 @@
           <span class="badge" *ngIf="cartService.getCartCount() > 0">{{ cartService.getCartCount() }}</span>
         </div>
       </div>
-      
-      
+
       <button *ngIf="(authService.user$ | async) === null" class="btn-primary desktop-only" routerLink="/login">Login</button>
-      
+
       <div *ngIf="(authService.user$ | async) as user" class="desktop-only user-dropdown relative" style="display: flex; align-items: center; gap: 0.5rem; color: #fff; cursor: pointer;">
         <span class="material-icons">account_circle</span>
         <span style="font-size: 0.9rem;">{{ user.displayName || 'User' }}</span>
         <button class="btn-secondary" style="margin-left: 10px; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: transparent; border: 1px solid #5a5a5a; color: #fff; border-radius: 4px; cursor: pointer;" (click)="authService.logout()">Logout</button>
       </div>
-      
+
       <button class="mobile-menu-toggle" (click)="toggleMenu()">
         <span class="material-icons">{{ isMenuOpen ? 'close' : 'menu' }}</span>
       </button>
     </div>
   </div>
 
+  <!-- Search Overlay -->
   <div class="search-overlay" [class.active]="isSearchVisible">
     <div class="search-container container">
       <div class="search-input-wrapper">
         <span class="material-icons search-icon">search</span>
-        <input type="text" placeholder="Search for products..." #searchInput (keyup.enter)="toggleSearch()">
-        <span class="material-icons close-icon" (click)="toggleSearch()">close</span>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search products, articles..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchInput()"
+          (keyup.escape)="closeSearch()"
+          autocomplete="off"
+        >
+        <span class="material-icons searching-spinner" *ngIf="isSearching">sync</span>
+        <span class="material-icons close-icon" (click)="closeSearch()">close</span>
+      </div>
+
+      <!-- Results Dropdown -->
+      <div class="search-results" *ngIf="searchTerm.length >= 2">
+        <!-- Searching -->
+        <div class="search-status" *ngIf="isSearching">
+          <span class="material-icons spin">sync</span> Searching Firebase...
+        </div>
+
+        <!-- Empty State -->
+        <div class="search-status empty" *ngIf="!isSearching && searchResults.length === 0">
+          <span class="material-icons">search_off</span>
+          No results found for "<strong>{{ searchTerm }}</strong>"
+        </div>
+
+        <!-- Results List -->
+        <ng-container *ngIf="!isSearching && searchResults.length > 0">
+          <div class="result-group-label">{{ searchResults.length }} result(s)</div>
+          <div
+            class="search-result-item"
+            *ngFor="let result of searchResults"
+            (click)="goToResult(result)"
+          >
+            <img [src]="result.image" [alt]="result.title" class="result-thumb">
+            <div class="result-info">
+              <span class="result-type" [class.product]="result.type === 'product'" [class.post]="result.type === 'post'">
+                {{ result.type === 'product' ? 'Product' : 'Article' }}
+              </span>
+              <p class="result-title">{{ result.title }}</p>
+              <span class="result-category">{{ result.category }}</span>
+            </div>
+            <span class="material-icons result-arrow">arrow_forward_ios</span>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

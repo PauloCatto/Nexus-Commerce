@@ -70,15 +70,15 @@ export class Shop implements OnInit {
     }
   }
 
-  addToCart(product: Product, event: Event): void {
+  async addToCart(product: Product, event: Event): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
-    this.cartService.addToCart(product);
+    await this.cartService.addToCart(product);
   }
 
-  toggleWishlist(product: Product, event: Event): void {
+  async toggleWishlist(product: Product, event: Event): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
-    this.cartService.toggleWishlist(product);
+    await this.cartService.toggleWishlist(product);
   }
 }

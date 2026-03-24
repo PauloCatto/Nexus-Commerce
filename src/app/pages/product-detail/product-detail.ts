@@ -56,16 +56,16 @@ export class ProductDetail implements OnInit {
     }
   }
 
-  addToCart(): void {
+  async addToCart(): Promise<void> {
     if (this.product) {
-      this.cartService.addToCart(this.product, this.selectedQuantity);
+      await this.cartService.addToCart(this.product, this.selectedQuantity);
       this.selectedQuantity = 1;
     }
   }
 
-  toggleWishlist(): void {
+  async toggleWishlist(): Promise<void> {
     if (this.product) {
-      this.cartService.toggleWishlist(this.product);
+      await this.cartService.toggleWishlist(this.product);
     }
   }
 }

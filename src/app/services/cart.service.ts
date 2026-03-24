@@ -88,8 +88,9 @@ export class CartService {
     }
 
     this.cartItems.next(updated);
+    this.ns.showProduct(`<strong>${product.name}</strong> foi adicionado ao seu carrinho!`, product.image, 'cart');
+
     await this.syncCartToFirebase(user.uid, updated);
-    this.ns.show(`"${product.name}" adicionado ao carrinho!`, 'success');
   }
 
   async updateQuantity(productName: string, delta: number): Promise<void> {
@@ -120,7 +121,6 @@ export class CartService {
   }
 
   private async syncCartToFirebase(uid: string, items: Product[]): Promise<void> {
-    // Apaga a subcoleção e recria com os itens atuais
     const colRef = collection(this.firestore, `carts/${uid}/items`);
     const snap = await getDocs(colRef);
     for (const d of snap.docs) await deleteDoc(d.ref);
@@ -139,7 +139,6 @@ export class CartService {
     for (const d of snap.docs) await deleteDoc(d.ref);
   }
 
-  // ─── Wishlist ──────────────────────────────────────────────────
   async toggleWishlist(product: Product): Promise<void> {
     const user = await this.getUser();
     if (!user) return;
@@ -153,7 +152,7 @@ export class CartService {
       this.ns.show(`"${product.name}" removido dos favoritos.`);
     } else {
       updated = [...current, product];
-      this.ns.show(`"${product.name}" adicionado aos favoritos!`, 'success');
+      this.ns.showProduct(`<strong>${product.name}</strong> está na sua lista de desejos!`, product.image, 'wishlist');
     }
 
     this.wishlistItems.next(updated);
@@ -169,7 +168,6 @@ export class CartService {
     }
   }
 
-  // ─── Helpers ───────────────────────────────────────────────────
   isInWishlist(productName: string): boolean {
     return this.wishlistItems.value.some(p => p.name === productName);
   }

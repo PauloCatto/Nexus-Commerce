@@ -3,7 +3,6 @@ $blur: 20px;
 $shadow: 0 32px 64px rgba(0, 0, 0, 0.55);
 $duration-bar: 3s;
 
-// ─── Container ───────────────────────────────────────────────────
 .notification-container {
   position: fixed;
   top: 1.5rem;
@@ -24,7 +23,6 @@ $duration-bar: 3s;
   }
 }
 
-// ─── Base Toast ──────────────────────────────────────────────────
 .toast {
   pointer-events: auto;
   border-radius: $radius;
@@ -42,15 +40,27 @@ $duration-bar: 3s;
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.65);
   }
 
-  // ── Status accent stripes ──
-  &--success { border-left: 3px solid #10b981; }
-  &--error   { border-left: 3px solid #ef4444; }
-  &--info    { border-left: 3px solid #3b82f6; }
-  &--auth    { border-left: 3px solid #8b5cf6; }
-  &--logout  { border-left: 3px solid #6b7280; }
+  &--success {
+    border-left: 3px solid #10b981;
+  }
+
+  &--error {
+    border-left: 3px solid #ef4444;
+  }
+
+  &--info {
+    border-left: 3px solid #3b82f6;
+  }
+
+  &--auth {
+    border-left: 3px solid #8b5cf6;
+  }
+
+  &--logout {
+    border-left: 3px solid #6b7280;
+  }
 }
 
-// ─── Body row ────────────────────────────────────────────────────
 .toast__body {
   display: flex;
   align-items: center;
@@ -58,7 +68,6 @@ $duration-bar: 3s;
   padding: 1rem 1.1rem;
 }
 
-// ─── Icon bubble (default toasts) ────────────────────────────────
 .toast__icon-wrap {
   width: 40px;
   height: 40px;
@@ -68,17 +77,33 @@ $duration-bar: 3s;
   align-items: center;
   justify-content: center;
 
-  .toast--success & { background: rgba(16, 185, 129, 0.12); }
-  .toast--error &   { background: rgba(239, 68, 68, 0.12); }
-  .toast--info &    { background: rgba(59, 130, 246, 0.12); }
+  .toast--success & {
+    background: rgba(16, 185, 129, 0.12);
+  }
+
+  .toast--error & {
+    background: rgba(239, 68, 68, 0.12);
+  }
+
+  .toast--info & {
+    background: rgba(59, 130, 246, 0.12);
+  }
 }
 
 .toast__icon {
   font-size: 1.4rem;
 
-  .toast--success & { color: #10b981; }
-  .toast--error &   { color: #ef4444; }
-  .toast--info &    { color: #3b82f6; }
+  .toast--success & {
+    color: #10b981;
+  }
+
+  .toast--error & {
+    color: #ef4444;
+  }
+
+  .toast--info & {
+    color: #3b82f6;
+  }
 }
 
 .toast__message {
@@ -90,7 +115,6 @@ $duration-bar: 3s;
   line-height: 1.5;
 }
 
-// ─── Close button (shared) ───────────────────────────────────────
 .toast__close {
   flex-shrink: 0;
   background: transparent;
@@ -108,18 +132,39 @@ $duration-bar: 3s;
     background: rgba(255, 255, 255, 0.08);
   }
 
-  .material-icons { font-size: 1rem; }
+  .material-icons {
+    font-size: 1rem;
+  }
 }
 
-// ─── Progress bar ────────────────────────────────────────────────
 .toast__bar {
   height: 2px;
   background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
   animation: shrink $duration-bar linear forwards;
 
-  .toast--success & { background: linear-gradient(90deg, #059669, #10b981); }
-  .toast--error &   { background: linear-gradient(90deg, #dc2626, #ef4444); }
-  .toast--info &    { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+  .toast--success & {
+    background: linear-gradient(90deg, #059669, #10b981);
+  }
+
+  .toast--error & {
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+  }
+
+  .toast--info & {
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+  }
+
+  .toast--auth & {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  }
+
+  &--cart {
+    background: linear-gradient(90deg, #8b5cf6, #d946ef) !important;
+  }
+
+  &--wishlist {
+    background: linear-gradient(90deg, #ec4899, #f472b6) !important;
+  }
 
   &--logout {
     background: linear-gradient(90deg, #4b5563, #9ca3af) !important;
@@ -127,7 +172,23 @@ $duration-bar: 3s;
   }
 }
 
-// ─── Auth Toast ──────────────────────────────────────────────────
+.product-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2px;
+  }
+}
+
 .auth-avatar {
   width: 44px;
   height: 44px;
@@ -157,7 +218,9 @@ $duration-bar: 3s;
     font-size: 1.75rem;
     color: #a78bfa;
 
-    .toast--logout & { color: #9ca3af; }
+    .toast--logout & {
+      color: #9ca3af;
+    }
   }
 }
 
@@ -174,7 +237,9 @@ $duration-bar: 3s;
     color: #a78bfa;
     margin-bottom: 0.2rem;
 
-    .toast--logout & { color: #9ca3af; }
+    .toast--logout & {
+      color: #9ca3af;
+    }
   }
 
   &__message {
@@ -187,16 +252,19 @@ $duration-bar: 3s;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    strong { color: #c4b5fd; font-weight: 700; }
+    strong {
+      color: #c4b5fd;
+      font-weight: 700;
+    }
   }
 }
 
-// ─── Animations ──────────────────────────────────────────────────
 @keyframes slideIn {
   from {
     transform: translateX(calc(100% + 2rem));
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -204,6 +272,11 @@ $duration-bar: 3s;
 }
 
 @keyframes shrink {
-  from { width: 100%; }
-  to   { width: 0%; }
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
 }

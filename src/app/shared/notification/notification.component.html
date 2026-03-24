@@ -1,16 +1,8 @@
 <div class="notification-container">
-  <div
-    *ngFor="let n of notifications; trackBy: trackById"
-    class="toast"
-    [class.toast--success]="n.type === 'success'"
-    [class.toast--error]="n.type === 'error'"
-    [class.toast--info]="n.type === 'info'"
-    [class.toast--auth]="n.type === 'auth'"
-    [class.toast--product]="n.type === 'product'"
-    [class.toast--logout]="n.authType === 'logout'"
-    (click)="remove(n.id)"
-  >
-    <!-- ── Product Toast (cart/wishlist) ── -->
+  <div *ngFor="let n of notifications; trackBy: trackById" class="toast" [class.toast--success]="n.type === 'success'"
+    [class.toast--error]="n.type === 'error'" [class.toast--info]="n.type === 'info'"
+    [class.toast--auth]="n.type === 'auth'" [class.toast--product]="n.type === 'product'"
+    [class.toast--logout]="n.authType === 'logout'" (click)="remove(n.id)">
     <ng-container *ngIf="n.type === 'product'">
       <div class="toast__body">
         <div class="product-thumb">
@@ -18,7 +10,7 @@
         </div>
         <div class="auth-info">
           <span class="auth-info__label">
-            {{ n.productType === 'cart' ? '✦ Item no carrinho' : '✦ Item favorito' }}
+            {{ n.productType === 'cart' ? '✦ In your cart' : '✦ Wishlisted' }}
           </span>
           <p class="auth-info__message" [innerHTML]="n.message"></p>
         </div>
@@ -26,10 +18,10 @@
           <span class="material-icons">close</span>
         </button>
       </div>
-      <div class="toast__bar" [class.toast__bar--cart]="n.productType === 'cart'" [class.toast__bar--wishlist]="n.productType === 'wishlist'"></div>
+      <div class="toast__bar" [class.toast__bar--cart]="n.productType === 'cart'"
+        [class.toast__bar--wishlist]="n.productType === 'wishlist'"></div>
     </ng-container>
 
-    <!-- ── Auth Toast ── -->
     <ng-container *ngIf="n.type === 'auth'">
       <div class="toast__body">
         <div class="auth-avatar">
@@ -40,7 +32,7 @@
         </div>
         <div class="auth-info">
           <span class="auth-info__label">
-            {{ n.authType === 'login' ? '✦ Sessão iniciada' : '✦ Sessão encerrada' }}
+            {{ n.authType === 'login' ? '✦ Logged In' : '✦ Logged Out' }}
           </span>
           <p class="auth-info__message" [innerHTML]="n.message"></p>
         </div>
@@ -51,7 +43,6 @@
       <div class="toast__bar" [class.toast__bar--logout]="n.authType === 'logout'"></div>
     </ng-container>
 
-    <!-- ── Default Toast ── -->
     <ng-container *ngIf="n.type === 'success' || n.type === 'error' || n.type === 'info'">
       <div class="toast__body">
         <div class="toast__icon-wrap">

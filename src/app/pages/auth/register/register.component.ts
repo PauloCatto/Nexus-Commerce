@@ -28,7 +28,7 @@ export class RegisterComponent {
 
   async onSubmit() {
     if (this.registerData.password !== this.registerData.confirmPassword) {
-      this.errorMessage = 'As senhas não coincidem.';
+      this.errorMessage = 'Passwords do not match.';
       return;
     }
 
@@ -44,7 +44,7 @@ export class RegisterComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.error('Registration error:', error);
-      this.errorMessage = 'Erro ao criar conta. O e-mail já pode estar em uso.';
+      this.errorMessage = 'Error creating account. The email may already be in use.';
     } finally {
       this.isLoading = false;
     }

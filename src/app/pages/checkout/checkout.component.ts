@@ -96,7 +96,7 @@ export class CheckoutComponent implements OnInit {
 
   async processPayment(): Promise<void> {
     if (this.paymentMethod !== 'pix' && (!this.cardName || !this.cardNumber || !this.cardExpiry || !this.cardCVV)) {
-      this.ns.show('Por favor, preencha todos os campos do cartão.', 'error');
+      this.ns.show('Please fill in all card details.', 'error');
       return;
     }
 
@@ -126,12 +126,12 @@ export class CheckoutComponent implements OnInit {
       this.triggerConfetti();
 
       setTimeout(() => {
-        this.ns.show('Pagamento realizado com sucesso!', 'success');
+        this.ns.show('Payment processed successfully!', 'success');
       }, 0);
 
     } catch (error) {
       this.isProcessing = false;
-      this.ns.show('Falha ao processar pagamento. Tente novamente.', 'error');
+      this.ns.show('Failed to process payment. Please try again.', 'error');
       this.cdr.detectChanges();
       console.error(error);
     }
@@ -159,12 +159,12 @@ export class CheckoutComponent implements OnInit {
 
   get estimatedDelivery(): string {
     const date = new Date();
-    date.setDate(date.getDate() + 4); // + 4 dias
-    return date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+    date.setDate(date.getDate() + 4); 
+    return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
   copyPixCode(): void {
     navigator.clipboard.writeText(this.pixCode);
-    this.ns.show('Código PIX copiado para a área de transferência!', 'info');
+    this.ns.show('PIX code copied to clipboard!', 'info');
   }
 }

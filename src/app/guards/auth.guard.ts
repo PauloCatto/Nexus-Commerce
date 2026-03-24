@@ -13,6 +13,6 @@ export const authGuard: CanActivateFn = async () => {
 
   if (user) return true;
 
-  ns.show('Faça login para acessar esta página.', 'error');
+  ns.show('Please log in to access this page.', 'error');
   return router.createUrlTree(['/login']);
 };

@@ -34,7 +34,7 @@ export class LoginComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.error('Login error:', error);
-      this.errorMessage = 'Credenciais inválidas. Tente novamente.';
+      this.errorMessage = 'Invalid credentials. Please try again.';
     } finally {
       this.isLoading = false;
     }
@@ -48,7 +48,7 @@ export class LoginComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.error('Google login error:', error);
-      this.errorMessage = 'Falha ao logar com Google.';
+      this.errorMessage = 'Failed to login with Google.';
     } finally {
       this.isLoading = false;
     }

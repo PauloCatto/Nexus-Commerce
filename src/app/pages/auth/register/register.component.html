@@ -87,8 +87,12 @@
           </label>
         </div>
 
-        <button type="submit" class="btn-primary auth-submit" [disabled]="!registerForm.form.valid || registerData.password !== registerData.confirmPassword">
-          Create Account
+        <div *ngIf="errorMessage" class="error-message" style="color: #ff4d4d; margin-bottom: 15px; text-align: center;">
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="btn-primary auth-submit" [disabled]="!registerForm.form.valid || registerData.password !== registerData.confirmPassword || isLoading">
+          {{ isLoading ? 'Creating...' : 'Create Account' }}
           <span class="material-icons">rocket_launch</span>
         </button>
       </form>

@@ -3,8 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Notification {
   message: string;
-  type: 'success' | 'error' | 'info';
+  type: 'success' | 'error' | 'info' | 'auth';
   id: number;
+  photo?: string | null;
+  authType?: 'login' | 'logout';
 }
 
 @Injectable({
@@ -20,10 +22,19 @@ export class NotificationService {
     const current = this.notifications.value;
     this.notifications.next([...current, { message, type, id }]);
 
-    // Auto remove after 3 seconds
     setTimeout(() => {
       this.remove(id);
     }, 3000);
+  }
+
+  showAuth(message: string, photo: string | null, authType: 'login' | 'logout') {
+    const id = this.counter++;
+    const current = this.notifications.value;
+    this.notifications.next([...current, { message, type: 'auth', id, photo, authType }]);
+
+    setTimeout(() => {
+      this.remove(id);
+    }, 4000);
   }
 
   remove(id: number) {

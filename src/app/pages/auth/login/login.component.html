@@ -54,15 +54,19 @@
           <a routerLink="/forgot-password" class="forgot-link">Recover password</a>
         </div>
 
-        <button type="submit" class="btn-primary auth-submit" [disabled]="!loginForm.form.valid">
-          Authenticate
+        <button type="submit" class="btn-primary auth-submit" [disabled]="!loginForm.form.valid || isLoading">
+          {{ isLoading ? 'Loading...' : 'Authenticate' }}
           <span class="material-icons">arrow_forward</span>
         </button>
+
+        <div *ngIf="errorMessage" class="error-message" style="color: #ff4d4d; margin-top: 10px; text-align: center;">
+          {{ errorMessage }}
+        </div>
 
         <div class="social-login">
           <p>Or continue with elite providers</p>
           <div class="social-btns">
-            <button type="button" class="social-btn">
+            <button type="button" class="social-btn" (click)="loginWithGoogle()" [disabled]="isLoading">
               <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
             </button>
             <button type="button" class="social-btn">

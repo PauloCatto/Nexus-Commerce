@@ -33,26 +33,33 @@
     </aside>
 
     <div class="products-grid">
-      <div class="product-card-wrapper" *ngFor="let prod of filteredProducts">
-        <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card">
-          <div class="img-wrapper">
-            <img [src]="prod.image" [alt]="prod.name">
-            <button class="favorite-btn" [class.active]="cartService.isInWishlist(prod.name)" (click)="toggleWishlist(prod, $event)">
-              <span class="material-icons">{{ cartService.isInWishlist(prod.name) ? 'favorite' : 'favorite_border' }}</span>
-            </button>
-          </div>
-          <div class="info">
-            <span class="category-tag">{{ prod.category }}</span>
-            <h3>{{ prod.name }}</h3>
-            <div class="card-footer">
-              <p class="price">${{ prod.price }}</p>
-              <button class="add-cart-btn" (click)="addToCart(prod, $event)">
-                <span class="material-icons">shopping_bag</span>
+      <div *ngIf="isLoadingProducts" class="loading-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: #ccc;">
+        <span class="material-icons" style="font-size: 4rem; animation: spin 2s linear infinite;">sync</span>
+        <p style="margin-top: 1rem; font-size: 1.2rem;">Fetching live database...</p>
+      </div>
+
+      <ng-container *ngIf="!isLoadingProducts">
+        <div class="product-card-wrapper" *ngFor="let prod of filteredProducts">
+          <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card">
+            <div class="img-wrapper">
+              <img [src]="prod.image" [alt]="prod.name">
+              <button class="favorite-btn" [class.active]="cartService.isInWishlist(prod.name)" (click)="toggleWishlist(prod, $event)">
+                <span class="material-icons">{{ cartService.isInWishlist(prod.name) ? 'favorite' : 'favorite_border' }}</span>
               </button>
             </div>
-          </div>
-        </a>
-      </div>
+            <div class="info">
+              <span class="category-tag">{{ prod.category }}</span>
+              <h3>{{ prod.name }}</h3>
+              <div class="card-footer">
+                <p class="price">${{ prod.price }}</p>
+                <button class="add-cart-btn" (click)="addToCart(prod, $event)">
+                  <span class="material-icons">shopping_bag</span>
+                </button>
+              </div>
+            </div>
+          </a>
+        </div>
+      </ng-container>
     </div>
   </div>
 </main>

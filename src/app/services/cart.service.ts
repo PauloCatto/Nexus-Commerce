@@ -1,14 +1,20 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
+import {
+  Firestore,
+  collection,
+  doc,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  onSnapshot
+} from '@angular/fire/firestore';
+import { Auth, authState } from '@angular/fire/auth';
 import { NotificationService } from './notification.service';
+import { Product } from '../models/product.model';
 
-export interface Product {
-    name: string;
-    price: string;
-    image: string;
-    category: string;
-    quantity?: number;
-}
+export type { Product };
 
 @Injectable({
   providedIn: 'root'
@@ -16,55 +22,144 @@ export interface Product {
 export class CartService {
   private cartItems = new BehaviorSubject<Product[]>([]);
   private wishlistItems = new BehaviorSubject<Product[]>([]);
-  
+
   cart$ = this.cartItems.asObservable();
   wishlist$ = this.wishlistItems.asObservable();
 
-  constructor(private ns: NotificationService) {}
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+  private ns = inject(NotificationService);
+  private router = inject(Router);
 
-  addToCart(product: Product, quantity: number = 1) {
-    const current = this.cartItems.value;
-    const existing = current.find(p => p.name === product.name);
-    if (existing) {
-        existing.quantity = (existing.quantity || 1) + quantity;
-        this.cartItems.next([...current]);
-    } else {
-        this.cartItems.next([...current, { ...product, quantity }]);
-    }
-    this.ns.show(`"${product.name}" added to cart!`, 'success');
+  constructor() {
+    // Escuta mudanças de autenticação e carrega os dados do usuário logado
+    authState(this.auth).subscribe(user => {
+      if (user) {
+        this.loadFromFirebase(user.uid);
+      } else {
+        this.cartItems.next([]);
+        this.wishlistItems.next([]);
+      }
+    });
   }
 
-  updateQuantity(productName: string, delta: number) {
+  // ─── Auth Guard ────────────────────────────────────────────────
+  private async getUser() {
+    const user = await firstValueFrom(authState(this.auth));
+    if (!user) {
+      this.ns.show('Você precisa estar logado para continuar!', 'error');
+      setTimeout(() => this.router.navigate(['/login']), 1500);
+      return null;
+    }
+    return user;
+  }
+
+  // ─── Load from Firebase ────────────────────────────────────────
+  private async loadFromFirebase(uid: string): Promise<void> {
+    try {
+      const cartSnap = await getDocs(collection(this.firestore, `carts/${uid}/items`));
+      const cart: Product[] = [];
+      cartSnap.forEach((d: any) => cart.push(d.data() as Product));
+      this.cartItems.next(cart);
+
+      const wishSnap = await getDocs(collection(this.firestore, `wishlists/${uid}/items`));
+      const wish: Product[] = [];
+      wishSnap.forEach((d: any) => wish.push(d.data() as Product));
+      this.wishlistItems.next(wish);
+    } catch (err) {
+      console.error('Erro ao carregar dados do Firebase:', err);
+    }
+  }
+
+  // ─── Cart ──────────────────────────────────────────────────────
+  async addToCart(product: Product, quantity: number = 1): Promise<void> {
+    const user = await this.getUser();
+    if (!user) return;
+
+    const current = this.cartItems.value;
+    const existing = current.find(p => p.name === product.name);
+    let updated: Product[];
+
+    if (existing) {
+      existing.quantity = (existing.quantity || 1) + quantity;
+      updated = [...current];
+    } else {
+      updated = [...current, { ...product, quantity }];
+    }
+
+    this.cartItems.next(updated);
+    await this.syncCartToFirebase(user.uid, updated);
+    this.ns.show(`"${product.name}" adicionado ao carrinho!`, 'success');
+  }
+
+  async updateQuantity(productName: string, delta: number): Promise<void> {
+    const user = await this.getUser();
+    if (!user) return;
+
     const current = this.cartItems.value;
     const item = current.find(p => p.name === productName);
     if (item) {
-        const newQty = (item.quantity || 1) + delta;
-        if (newQty > 0) {
-            item.quantity = newQty;
-            this.cartItems.next([...current]);
-        }
+      const newQty = (item.quantity || 1) + delta;
+      if (newQty > 0) {
+        item.quantity = newQty;
+        const updated = [...current];
+        this.cartItems.next(updated);
+        await this.syncCartToFirebase(user.uid, updated);
+      }
     }
   }
 
-  removeFromCart(productName: string) {
-    const current = this.cartItems.value.filter(p => p.name !== productName);
-    this.cartItems.next(current);
-    this.ns.show('Product removed from cart.', 'info');
+  async removeFromCart(productName: string): Promise<void> {
+    const user = await this.getUser();
+    if (!user) return;
+
+    const updated = this.cartItems.value.filter(p => p.name !== productName);
+    this.cartItems.next(updated);
+    await this.syncCartToFirebase(user.uid, updated);
+    this.ns.show('Produto removido do carrinho.', 'info');
   }
 
-  toggleWishlist(product: Product) {
+  private async syncCartToFirebase(uid: string, items: Product[]): Promise<void> {
+    // Apaga a subcoleção e recria com os itens atuais
+    const colRef = collection(this.firestore, `carts/${uid}/items`);
+    const snap = await getDocs(colRef);
+    for (const d of snap.docs) await deleteDoc(d.ref);
+    for (const item of items) {
+      await setDoc(doc(colRef, item.name), item);
+    }
+  }
+
+  // ─── Wishlist ──────────────────────────────────────────────────
+  async toggleWishlist(product: Product): Promise<void> {
+    const user = await this.getUser();
+    if (!user) return;
+
     const current = this.wishlistItems.value;
     const index = current.findIndex(p => p.name === product.name);
+    let updated: Product[];
+
     if (index > -1) {
-        current.splice(index, 1);
-        this.ns.show(`Removed "${product.name}" from wishlist.`);
+      updated = current.filter(p => p.name !== product.name);
+      this.ns.show(`"${product.name}" removido dos favoritos.`);
     } else {
-        current.push(product);
-        this.ns.show(`Saved "${product.name}" to wishlist!`, 'success');
+      updated = [...current, product];
+      this.ns.show(`"${product.name}" adicionado aos favoritos!`, 'success');
     }
-    this.wishlistItems.next([...current]);
+
+    this.wishlistItems.next(updated);
+    await this.syncWishlistToFirebase(user.uid, updated);
   }
 
+  private async syncWishlistToFirebase(uid: string, items: Product[]): Promise<void> {
+    const colRef = collection(this.firestore, `wishlists/${uid}/items`);
+    const snap = await getDocs(colRef);
+    for (const d of snap.docs) await deleteDoc(d.ref);
+    for (const item of items) {
+      await setDoc(doc(colRef, item.name), item);
+    }
+  }
+
+  // ─── Helpers ───────────────────────────────────────────────────
   isInWishlist(productName: string): boolean {
     return this.wishlistItems.value.some(p => p.name === productName);
   }

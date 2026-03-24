@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
-import { CartService, Product } from '../../services/cart.service';
+import { CartService } from '../../services/cart.service';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-wishlist',

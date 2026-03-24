@@ -1,0 +1,56 @@
+<div class="notification-container">
+  <div
+    *ngFor="let n of notifications; trackBy: trackById"
+    class="toast"
+    [class.toast--success]="n.type === 'success'"
+    [class.toast--error]="n.type === 'error'"
+    [class.toast--info]="n.type === 'info'"
+    [class.toast--auth]="n.type === 'auth'"
+    [class.toast--logout]="n.authType === 'logout'"
+    (click)="remove(n.id)"
+  >
+    <!-- ── Auth Toast ── -->
+    <ng-container *ngIf="n.type === 'auth'; else defaultToast">
+      <div class="toast__body">
+        <div class="auth-avatar">
+          <img *ngIf="n.photo" [src]="n.photo" alt="avatar" class="auth-avatar__img">
+          <span *ngIf="!n.photo" class="material-icons auth-avatar__icon">
+            {{ n.authType === 'login' ? 'account_circle' : 'logout' }}
+          </span>
+        </div>
+
+        <div class="auth-info">
+          <span class="auth-info__label">
+            {{ n.authType === 'login' ? '✦ Sessão iniciada' : '✦ Sessão encerrada' }}
+          </span>
+          <p class="auth-info__message" [innerHTML]="n.message"></p>
+        </div>
+
+        <button class="toast__close" (click)="$event.stopPropagation(); remove(n.id)">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="toast__bar" [class.toast__bar--logout]="n.authType === 'logout'"></div>
+    </ng-container>
+
+    <!-- ── Default Toast ── -->
+    <ng-template #defaultToast>
+      <div class="toast__body">
+        <div class="toast__icon-wrap">
+          <span class="material-icons toast__icon">
+            {{ n.type === 'success' ? 'check_circle' : n.type === 'error' ? 'error_outline' : 'info' }}
+          </span>
+        </div>
+
+        <p class="toast__message">{{ n.message }}</p>
+
+        <button class="toast__close" (click)="$event.stopPropagation(); remove(n.id)">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="toast__bar"></div>
+    </ng-template>
+  </div>
+</div>

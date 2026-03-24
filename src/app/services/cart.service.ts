@@ -129,6 +129,16 @@ export class CartService {
     }
   }
 
+  async clearCart(): Promise<void> {
+    const user = await this.getUser();
+    if (!user) return;
+
+    this.cartItems.next([]);
+    const colRef = collection(this.firestore, `carts/${user.uid}/items`);
+    const snap = await getDocs(colRef);
+    for (const d of snap.docs) await deleteDoc(d.ref);
+  }
+
   // ─── Wishlist ──────────────────────────────────────────────────
   async toggleWishlist(product: Product): Promise<void> {
     const user = await this.getUser();

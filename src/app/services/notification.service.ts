@@ -3,10 +3,11 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Notification {
   message: string;
-  type: 'success' | 'error' | 'info' | 'auth';
+  type: 'success' | 'error' | 'info' | 'auth' | 'product';
   id: number;
   photo?: string | null;
   authType?: 'login' | 'logout';
+  productType?: 'cart' | 'wishlist';
 }
 
 @Injectable({
@@ -31,6 +32,22 @@ export class NotificationService {
     const id = this.counter++;
     const current = this.notifications.value;
     this.notifications.next([...current, { message, type: 'auth', id, photo, authType }]);
+
+    setTimeout(() => {
+      this.remove(id);
+    }, 4000);
+  }
+
+  showProduct(message: string, image: string, productType: 'cart' | 'wishlist') {
+    const id = this.counter++;
+    const current = this.notifications.value;
+    this.notifications.next([...current, { 
+      message, 
+      type: 'product', 
+      id, 
+      photo: image, 
+      productType 
+    }]);
 
     setTimeout(() => {
       this.remove(id);

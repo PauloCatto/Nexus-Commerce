@@ -1,0 +1,146 @@
+<app-header></app-header>
+
+<main class="checkout-page container">
+  <div class="checkout-wrapper" *ngIf="!isSuccess; else successTpl">
+    <div class="checkout-header">
+      <span class="badge">Nexus Pay</span>
+      <h1>Elite <span class="highlight">Checkout</span></h1>
+      <p>Secure premium payment. Finalizing your selection.</p>
+    </div>
+
+    <div class="checkout-grid">
+      <!-- ── Payment Info ── -->
+      <div class="payment-info section-card">
+        <h2 class="section-title">Payment Method</h2>
+        
+        <div class="payment-tabs">
+          <button 
+            class="tab-btn" 
+            [class.active]="paymentMethod === 'credit'"
+            (click)="paymentMethod = 'credit'"
+          >
+            <span class="material-icons">credit_card</span>
+            Credit Card
+          </button>
+          <button 
+            class="tab-btn" 
+            [class.active]="paymentMethod === 'debit'"
+            (click)="paymentMethod = 'debit'"
+          >
+            <span class="material-icons">account_balance_wallet</span>
+            Debit Card
+          </button>
+          <button 
+            class="tab-btn" 
+            [class.active]="paymentMethod === 'pix'"
+            (click)="paymentMethod = 'pix'"
+          >
+            <span class="material-icons">qr_code</span>
+            PIX
+          </button>
+        </div>
+
+        <!-- ── Card Form (Credit/Debit) ── -->
+        <div class="payment-form" *ngIf="paymentMethod === 'credit' || paymentMethod === 'debit'">
+          <div class="form-group full">
+            <label for="cardName">Name on Card</label>
+            <input type="text" id="cardName" name="cardName" [(ngModel)]="cardName" placeholder="Full name as written on card">
+          </div>
+          <div class="form-group full">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" [(ngModel)]="cardNumber" placeholder="0000 0000 0000 0000">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cardExpiry">Expiration Date</label>
+              <input type="text" id="cardExpiry" name="cardExpiry" [(ngModel)]="cardExpiry" placeholder="MM/YY">
+            </div>
+            <div class="form-group">
+              <label for="cardCVV">CVV</label>
+              <input type="password" id="cardCVV" name="cardCVV" [(ngModel)]="cardCVV" placeholder="***">
+            </div>
+          </div>
+
+          <!-- Installments (only for credit) -->
+          <div class="form-group full" *ngIf="paymentMethod === 'credit'">
+            <label for="installments">Installments</label>
+            <select id="installments" name="installments" [(ngModel)]="installments">
+              <option *ngFor="let opt of installmentOptions" [value]="opt.value">{{ opt.label }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ── PIX Simulation ── -->
+        <div class="pix-simulation" *ngIf="paymentMethod === 'pix'">
+          <div class="pix-info">
+            <p>Pay instantly with PIX. Scan the QR Code or copy the code below.</p>
+            <div class="qr-code-wrapper">
+              <qrcode [qrdata]="pixCode" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+            </div>
+            <div class="pix-copy-wrapper">
+              <input type="text" [value]="pixCode" readonly>
+              <button class="btn-copy" (click)="copyPixCode()">
+                <span class="material-icons">content_copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary pay-btn" [disabled]="isProcessing" (click)="processPayment()">
+          <span class="material-icons spin" *ngIf="isProcessing">sync</span>
+          {{ isProcessing ? 'Processing Transaction...' : 'Pay ' + (total | currency) }}
+        </button>
+      </div>
+
+      <!-- ── Cart Summary ── -->
+      <aside class="cart-summary section-card">
+        <h2 class="section-title">Order Summary</h2>
+        <div class="summary-items">
+          <div class="summary-item" *ngFor="let item of cartItems">
+            <div class="item-thumb">
+              <img [src]="item.image" [alt]="item.name">
+            </div>
+            <div class="item-meta">
+              <p class="name">{{ item.name }}</p>
+              <p class="meta">{{ item.quantity }}x • {{ item.category }}</p>
+              <p class="price">{{ (parseFloat(item.price) * (item.quantity || 1)) | currency }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span>{{ subtotal | currency }}</span>
+        </div>
+        <div class="summary-line">
+          <span>Shipping</span>
+          <span class="highlight">Free</span>
+        </div>
+        <div class="summary-line total">
+          <span>Total</span>
+          <span>{{ total | currency }}</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Success State -->
+  <ng-template #successTpl>
+    <div class="success-state">
+      <div class="success-circle">
+        <span class="material-icons">check_circle</span>
+      </div>
+      <h2>Payment Received!</h2>
+      <p>Thank you for your order, <strong>{{ cardName || 'Customer' }}</strong>.</p>
+      <div class="order-details">
+        <p>Order ID: <span>#{{ orderId }}</span></p>
+        <p>A confirmation email has been sent precisely to your inbox.</p>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" routerLink="/shop">Continue Shopping</button>
+      </div>
+    </div>
+  </ng-template>
+</main>
+
+<app-footer></app-footer>

@@ -12,28 +12,27 @@ import { slideInAnimation } from './app.animations';
   animations: [slideInAnimation],
   template: `
     <app-notification></app-notification>
-    <div [@routeAnimations]="getRouteAnimationData()" class="route-container">
-      <router-outlet></router-outlet>
+    <div [@routeAnimations]="prepareRoute(outlet)" class="route-container">
+      <router-outlet #outlet="outlet"></router-outlet>
     </div>
   `,
   styles: [`
     .route-container {
       position: relative;
-      min-height: 100vh;
       width: 100%;
+      overflow-x: hidden;
     }
   `]
 })
 export class App implements OnInit {
   title = 'nexus-commerce';
   private authToast = inject(AuthToastService);
-  private contexts = inject(ChildrenOutletContexts);
 
   ngOnInit(): void {
     this.authToast.init();
   }
 
-  getRouteAnimationData() {
-    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }

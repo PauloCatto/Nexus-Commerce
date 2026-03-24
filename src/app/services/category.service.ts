@@ -20,7 +20,7 @@ export class CategoryService {
 
       return categories;
     } catch (error) {
-      console.error('Falha ao buscar categorias do Firebase:', error);
+      console.error('Failed to fetch categories from Firebase:', error);
       return [];
     }
   }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ import { AuthService } from '../../../services/auth.service';
 export class RegisterComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private ns = inject(NotificationService);
 
   registerData = {
     fullName: '',
@@ -28,7 +30,13 @@ export class RegisterComponent {
 
   async onSubmit() {
     if (this.registerData.password !== this.registerData.confirmPassword) {
-      this.errorMessage = 'As senhas não coincidem.';
+      this.errorMessage = 'Passwords do not match.';
+      return;
+    }
+
+    if (this.registerData.password.length < 6) {
+      this.errorMessage = 'Password should be at least 6 characters.';
+      this.ns.show(this.errorMessage, 'error');
       return;
     }
 
@@ -44,7 +52,9 @@ export class RegisterComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.error('Registration error:', error);
-      this.errorMessage = 'Erro ao criar conta. O e-mail já pode estar em uso.';
+      const msg = this.authService.getAuthErrorMessage(error);
+      this.errorMessage = msg;
+      this.ns.show(msg, 'error');
     } finally {
       this.isLoading = false;
     }

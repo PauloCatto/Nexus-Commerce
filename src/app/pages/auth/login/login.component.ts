@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private ns = inject(NotificationService);
 
   loginData = {
     email: '',
@@ -34,7 +36,9 @@ export class LoginComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.error('Login error:', error);
-      this.errorMessage = 'Credenciais inválidas. Tente novamente.';
+      const msg = this.authService.getAuthErrorMessage(error);
+      this.errorMessage = msg;
+      this.ns.show(msg, 'error');
     } finally {
       this.isLoading = false;
     }
@@ -48,7 +52,8 @@ export class LoginComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.error('Google login error:', error);
-      this.errorMessage = 'Falha ao logar com Google.';
+      this.errorMessage = 'Failed to login with Google.';
+      this.ns.show(this.errorMessage, 'error');
     } finally {
       this.isLoading = false;
     }

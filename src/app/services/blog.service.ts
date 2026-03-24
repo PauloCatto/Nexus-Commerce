@@ -18,10 +18,9 @@ export class BlogService {
         posts.push({ id: doc.id, ...doc.data() } as BlogPost);
       });
 
-      console.log('✅ Blog posts carregados do Firebase:', posts);
       return posts;
     } catch (error) {
-      console.error('Falha ao buscar posts do Firebase:', error);
+      console.error('Failed to fetch posts from Firebase:', error);
       return [];
     }
   }

@@ -23,7 +23,7 @@ export class ProductService {
 
       return products;
     } catch (error) {
-      console.error('Falha ao buscar produtos do Firebase:', error);
+      console.error('Failed to fetch products from Firebase:', error);
       return [];
     }
   }

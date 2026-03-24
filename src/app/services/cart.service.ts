@@ -32,7 +32,6 @@ export class CartService {
   private router = inject(Router);
 
   constructor() {
-    // Escuta mudanças de autenticação e carrega os dados do usuário logado
     authState(this.auth).subscribe(user => {
       if (user) {
         this.loadFromFirebase(user.uid);
@@ -43,18 +42,16 @@ export class CartService {
     });
   }
 
-  // ─── Auth Guard ────────────────────────────────────────────────
   private async getUser() {
     const user = await firstValueFrom(authState(this.auth));
     if (!user) {
-      this.ns.show('Você precisa estar logado para continuar!', 'error');
+      this.ns.show('You need to be logged in to continue!', 'error');
       setTimeout(() => this.router.navigate(['/login']), 1500);
       return null;
     }
     return user;
   }
 
-  // ─── Load from Firebase ────────────────────────────────────────
   private async loadFromFirebase(uid: string): Promise<void> {
     try {
       const cartSnap = await getDocs(collection(this.firestore, `carts/${uid}/items`));
@@ -67,11 +64,10 @@ export class CartService {
       wishSnap.forEach((d: any) => wish.push(d.data() as Product));
       this.wishlistItems.next(wish);
     } catch (err) {
-      console.error('Erro ao carregar dados do Firebase:', err);
+      console.error('Error loading data from Firebase:', err);
     }
   }
 
-  // ─── Cart ──────────────────────────────────────────────────────
   async addToCart(product: Product, quantity: number = 1): Promise<void> {
     const user = await this.getUser();
     if (!user) return;
@@ -88,7 +84,7 @@ export class CartService {
     }
 
     this.cartItems.next(updated);
-    this.ns.showProduct(`<strong>${product.name}</strong> foi adicionado ao seu carrinho!`, product.image, 'cart');
+    this.ns.showProduct(`<strong>${product.name}</strong> has been added to your cart!`, product.image, 'cart');
 
     await this.syncCartToFirebase(user.uid, updated);
   }
@@ -117,7 +113,7 @@ export class CartService {
     const updated = this.cartItems.value.filter(p => p.name !== productName);
     this.cartItems.next(updated);
     await this.syncCartToFirebase(user.uid, updated);
-    this.ns.show('Produto removido do carrinho.', 'info');
+    this.ns.show('Product removed from cart.', 'info');
   }
 
   private async syncCartToFirebase(uid: string, items: Product[]): Promise<void> {
@@ -149,10 +145,10 @@ export class CartService {
 
     if (index > -1) {
       updated = current.filter(p => p.name !== product.name);
-      this.ns.show(`"${product.name}" removido dos favoritos.`);
+      this.ns.show(`"${product.name}" removed from favorites.`);
     } else {
       updated = [...current, product];
-      this.ns.showProduct(`<strong>${product.name}</strong> está na sua lista de desejos!`, product.image, 'wishlist');
+      this.ns.showProduct(`<strong>${product.name}</strong> is on your wishlist!`, product.image, 'wishlist');
     }
 
     this.wishlistItems.next(updated);

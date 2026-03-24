@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-categories',
@@ -9,11 +11,28 @@ import { RouterModule } from '@angular/router';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
-export class CategoriesComponent {
-  categories = [
-    { name: 'Controller', image: 'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&q=80&w=600' },
-    { name: 'Mouse', image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=600&auto=format&fit=crop' },
-    { name: 'Headset', image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=600' },
-    { name: 'Notebooks', image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=600&auto=format&fit=crop' }
-  ];
+export class CategoriesComponent implements OnInit {
+  categories: Category[] = [];
+  isLoading = true;
+
+  private categoryService = inject(CategoryService);
+  private cdr = inject(ChangeDetectorRef);
+  private ngZone = inject(NgZone);
+
+  async ngOnInit(): Promise<void> {
+    try {
+      const categories = await this.categoryService.getCategories();
+      this.ngZone.run(() => {
+        this.categories = categories;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      });
+    } catch (err) {
+      console.error(err);
+      this.ngZone.run(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      });
+    }
+  }
 }

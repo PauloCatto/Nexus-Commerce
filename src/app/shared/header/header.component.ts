@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,10 @@ export class HeaderComponent {
   isSearchVisible: boolean = false;
   isMenuOpen: boolean = false;
   
-  constructor(public cartService: CartService) {}
+  public cartService = inject(CartService);
+  public authService = inject(AuthService);
+
+  constructor() {}
 
   toggleSearch() {
     this.isSearchVisible = !this.isSearchVisible;

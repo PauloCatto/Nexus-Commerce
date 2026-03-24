@@ -1,7 +1,8 @@
 <app-header></app-header>
 
 <main class="checkout-page container">
-  <div class="checkout-wrapper" *ngIf="!isSuccess; else successTpl">
+  <!-- ── Payment Flow ── -->
+  <div class="checkout-wrapper" *ngIf="!isSuccess">
     <div class="checkout-header">
       <span class="badge">Nexus Pay</span>
       <h1>Elite <span class="highlight">Checkout</span></h1>
@@ -124,23 +125,138 @@
     </div>
   </div>
 
-  <!-- Success State -->
-  <ng-template #successTpl>
-    <div class="success-state">
-      <div class="success-circle">
-        <span class="material-icons">check_circle</span>
+  <!-- ── Success State ── -->
+  <div class="success-state" *ngIf="isSuccess">
+    <div class="success-circle">
+      <span class="material-icons">check_circle</span>
+    </div>
+    <h2>Purchase Complete!</h2>
+    <p>Thank you for your order, <strong>{{ cardName || 'Valued Customer' }}</strong>.</p>
+    
+    <!-- Order Progress Timeline -->
+    <div class="order-timeline">
+      <div class="timeline-step active">
+        <span class="material-icons">receipt_long</span>
+        <span class="step-label">Placed</span>
       </div>
-      <h2>Payment Received!</h2>
-      <p>Thank you for your order, <strong>{{ cardName || 'Customer' }}</strong>.</p>
-      <div class="order-details">
-        <p>Order ID: <span>#{{ orderId }}</span></p>
-        <p>A confirmation email has been sent precisely to your inbox.</p>
+      <div class="timeline-line active"></div>
+      <div class="timeline-step active">
+        <span class="material-icons">payments</span>
+        <span class="step-label">Paid</span>
       </div>
-      <div class="actions">
-        <button class="btn-primary" routerLink="/shop">Continue Shopping</button>
+      <div class="timeline-line"></div>
+      <div class="timeline-step">
+        <span class="material-icons">inventory_2</span>
+        <span class="step-label">Packing</span>
+      </div>
+      <div class="timeline-line"></div>
+      <div class="timeline-step">
+        <span class="material-icons">local_shipping</span>
+        <span class="step-label">Shipped</span>
       </div>
     </div>
-  </ng-template>
+
+    <div class="order-details">
+      <div class="detail-row">
+        <span>Order Number:</span>
+        <span class="val highlight">#{{ orderId }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Estimated Delivery:</span>
+        <span class="val">{{ estimatedDelivery }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Sent to:</span>
+        <span class="val">{{ userEmail }}</span>
+      </div>
+      <p class="email-notice">A digital receipt has been precisely delivered to your inbox.</p>
+    </div>
+
+    <div class="success-actions">
+      <button class="btn-primary" routerLink="/shop">Continue Shopping</button>
+      <button class="btn-outline" (click)="toggleReceipt()">
+        <span class="material-icons">receipt</span>
+        View Detailed Receipt
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Detailed Receipt Modal ── -->
+  <div class="receipt-overlay" *ngIf="isReceiptOpen && isSuccess" (click)="toggleReceipt()">
+    <div class="receipt-modal" (click)="$event.stopPropagation()">
+      <header class="receipt-header">
+        <div class="brand">
+          <span class="material-icons">diamond</span>
+          Nexus Commerce
+        </div>
+        <div class="receipt-meta">
+          <h1>INVOICE</h1>
+          <p>Order #{{ orderId }}</p>
+        </div>
+      </header>
+
+      <div class="receipt-section">
+        <div class="info-block">
+          <label>Billed To</label>
+          <p>{{ cardName || 'Valued Customer' }}</p>
+          <p>{{ userEmail }}</p>
+        </div>
+        <div class="info-block align-right">
+          <label>Date Issued</label>
+          <p>{{ today | date:'mediumDate' }}</p>
+          <label>Payment Method</label>
+          <p>{{ paymentMethod | uppercase }} {{ installments > 1 ? '(' + installments + 'x)' : '' }}</p>
+        </div>
+      </div>
+
+      <table class="receipt-table">
+        <thead>
+          <tr>
+            <th>Item Selection</th>
+            <th class="text-center">Qty</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartItems">
+            <td>
+              <p class="item-name">{{ item.name }}</p>
+              <p class="item-cat">{{ item.category }}</p>
+            </td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-right">{{ parseFloat(item.price) | currency }}</td>
+            <td class="text-right">{{ (parseFloat(item.price) * (item.quantity || 1)) | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="receipt-footer">
+        <div class="footer-summary">
+          <div class="footer-row">
+            <span>Subtotal</span>
+            <span>{{ total | currency }}</span>
+          </div>
+          <div class="footer-row">
+            <span>Tax (0.0%)</span>
+            <span>$0.00</span>
+          </div>
+          <div class="footer-row grand-total">
+            <span>Amount Paid</span>
+            <span>{{ total | currency }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="receipt-actions no-print">
+        <button class="btn-print" (click)="printReceipt()">
+          <span class="material-icons">print</span>
+          Print Invoice
+        </button>
+        <button class="btn-close-receipt" (click)="toggleReceipt()">Close</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <app-footer></app-footer>

@@ -2,9 +2,8 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
-import { UserProfile } from '../models/user-profile.model';
 import { ThemePreset } from '../models/theme.model';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 
 @Injectable({
@@ -21,10 +20,38 @@ export class ThemeService {
   private currentFontSubject = new BehaviorSubject<string>("'Outfit', sans-serif");
   public currentFont$ = this.currentFontSubject.asObservable();
 
-  private currentRadiusSubject = new BehaviorSubject<string>('14px');
-  public currentRadius$ = this.currentRadiusSubject.asObservable();
+  private currentStyleSubject = new BehaviorSubject<'minimal' | 'glass' | 'bold'>('glass');
+  public currentStyle$ = this.currentStyleSubject.asObservable();
+
+  private readonly STYLE_CONFIGS = {
+    minimal: {
+      '--radius-base': '4px',
+      '--radius-card': '8px',
+      '--ui-shadow': 'none',
+      '--ui-blur': '0px',
+      '--ui-border-width': '1px',
+      '--ui-glow': '0 0 0 rgba(0,0,0,0)'
+    },
+    glass: {
+      '--radius-base': '14px',
+      '--radius-card': '24px',
+      '--ui-shadow': '0 10px 30px rgba(0,0,0,0.1)',
+      '--ui-blur': '12px',
+      '--ui-border-width': '1px',
+      '--ui-glow': '0 4px 15px rgba(var(--primary-rgb), 0.2)'
+    },
+    bold: {
+      '--radius-base': '30px',
+      '--radius-card': '40px',
+      '--ui-shadow': '0 20px 50px rgba(0,0,0,0.2)',
+      '--ui-blur': '20px',
+      '--ui-border-width': '2px',
+      '--ui-glow': '0 8px 30px rgba(var(--primary-rgb), 0.4)'
+    }
+  };
 
   private presets: ThemePreset[] = [
+    /* ... Midnight ... */
     {
       name: 'midnight',
       label: 'Midnight (Dark)',
@@ -38,9 +65,11 @@ export class ThemeService {
         '--primary-color': '#8b5cf6',
         '--primary-hover': '#7c3aed',
         '--glass-bg': 'rgba(22, 28, 45, 0.7)',
-        '--border-color': 'rgba(255, 255, 255, 0.1)'
+        '--border-color': 'rgba(255, 255, 255, 0.1)',
+        '--primary-rgb': '139, 92, 246'
       }
     },
+    /* ... Cyberpunk ... */
     {
       name: 'cyberpunk',
       label: 'Cyberpunk',
@@ -54,9 +83,11 @@ export class ThemeService {
         '--primary-color': '#ff003c',
         '--primary-hover': '#d00030',
         '--glass-bg': 'rgba(5, 5, 5, 0.8)',
-        '--border-color': 'rgba(0, 255, 65, 0.2)'
+        '--border-color': 'rgba(0, 255, 65, 0.2)',
+        '--primary-rgb': '255, 0, 60'
       }
     },
+    /* ... Snow ... */
     {
       name: 'snow',
       label: 'Minimal Snow',
@@ -70,9 +101,11 @@ export class ThemeService {
         '--primary-color': '#3b82f6',
         '--primary-hover': '#2563eb',
         '--glass-bg': 'rgba(255, 255, 255, 0.7)',
-        '--border-color': 'rgba(0, 0, 0, 0.1)'
+        '--border-color': 'rgba(0, 0, 0, 0.1)',
+        '--primary-rgb': '59, 130, 246'
       }
     },
+    /* ... Forest ... */
     {
       name: 'forest',
       label: 'Organic Forest',
@@ -86,12 +119,11 @@ export class ThemeService {
         '--primary-color': '#10b981',
         '--primary-hover': '#059669',
         '--glass-bg': 'rgba(5, 44, 30, 0.7)',
-        '--border-color': 'rgba(255, 255, 255, 0.1)'
+        '--border-color': 'rgba(255, 255, 255, 0.1)',
+        '--primary-rgb': '16, 185, 129'
       }
     }
-
   ];
-
 
   constructor() {
     this.init();
@@ -99,11 +131,9 @@ export class ThemeService {
 
   private init() {
     if (isPlatformBrowser(this.platformId)) {
-      // 1. Initial Load from LocalStorage
       const savedTheme = localStorage.getItem('app-theme') || 'midnight';
       this.applyTheme(savedTheme);
 
-      // 2. Sync with Firebase on Login
       this.authService.user$.pipe(
         filter(user => !!user)
       ).subscribe(async user => {
@@ -113,8 +143,8 @@ export class ThemeService {
           document.documentElement.style.setProperty('--font-family', profile.fontFamily);
           this.currentFontSubject.next(profile.fontFamily);
         }
-        if (profile.borderRadius) {
-          this.setRadius(profile.borderRadius);
+        if (profile.interfaceStyle) {
+          this.setStyle(profile.interfaceStyle);
         }
       });
     }
@@ -126,13 +156,9 @@ export class ThemeService {
 
   public async setTheme(themeName: string) {
     this.applyTheme(themeName);
-    
-    // Save locally
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('app-theme', themeName);
     }
-
-    // Save to Firebase if logged in
     this.authService.user$.pipe(take(1)).subscribe(user => {
       if (user) {
         this.userService.updateProfile(user.uid, { theme: themeName });
@@ -143,7 +169,6 @@ export class ThemeService {
   public async setFont(fontFamily: string) {
     document.documentElement.style.setProperty('--font-family', fontFamily);
     this.currentFontSubject.next(fontFamily);
-    
     this.authService.user$.pipe(take(1)).subscribe(user => {
       if (user) {
         this.userService.updateProfile(user.uid, { fontFamily });
@@ -151,24 +176,22 @@ export class ThemeService {
     });
   }
 
-  public async setRadius(radius: string) {
+  public async setStyle(styleName: 'minimal' | 'glass' | 'bold') {
+    const config = this.STYLE_CONFIGS[styleName];
     const root = document.documentElement;
-    root.style.setProperty('--radius-base', radius);
-    
-    // Calculate a larger radius for cards
-    const radiusValue = parseInt(radius);
-    const cardRadius = isNaN(radiusValue) ? radius : `${radiusValue * 1.7}px`;
-    root.style.setProperty('--radius-card', cardRadius);
-    this.currentRadiusSubject.next(radius);
-    
+
+    Object.entries(config).forEach(([variable, value]) => {
+      root.style.setProperty(variable, value);
+    });
+
+    this.currentStyleSubject.next(styleName);
+
     this.authService.user$.pipe(take(1)).subscribe(user => {
       if (user) {
-        this.userService.updateProfile(user.uid, { borderRadius: radius });
+        this.userService.updateProfile(user.uid, { interfaceStyle: styleName });
       }
     });
   }
-
-
 
   private applyTheme(themeName: string) {
     const preset = this.presets.find(p => p.name === themeName) || this.presets[0];

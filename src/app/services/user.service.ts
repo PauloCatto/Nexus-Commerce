@@ -41,9 +41,10 @@ export class UserService {
         email: user.email,
         theme: 'midnight',
         fontFamily: "'Outfit', sans-serif",
-        borderRadius: '14px',
+        interfaceStyle: 'glass',
         lastUpdated: Date.now()
       };
+
       await setDoc(doc(this.firestore, `users/${user.uid}`), newProfile);
       return newProfile;
     }

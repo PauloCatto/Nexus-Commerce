@@ -1,0 +1,19 @@
+<div class="spinner-overlay" *ngIf="loadingService.isLoading$ | async" [@fade]>
+  <div class="spinner-content">
+    <div class="nexus-loader">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="logo-peek">N</div>
+    </div>
+    <div class="loading-text">
+      <span class="char">L</span>
+      <span class="char">O</span>
+      <span class="char">A</span>
+      <span class="char">D</span>
+      <span class="char">I</span>
+      <span class="char">N</span>
+      <span class="char">G</span>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,8 @@ import { BlogPost } from '../../models/blog-post.model';
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './post-detail.component.html',
-  styleUrl: './post-detail.component.scss'
+  styleUrls: ['./post-detail.component.scss']
+
 })
 export class PostDetailComponent implements OnInit {
   post: BlogPost | null = null;

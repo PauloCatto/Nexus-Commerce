@@ -3,7 +3,8 @@
     <div class="logo" routerLink="/" style="cursor: pointer;">Nexus</div>
 
     <nav class="nav-links" [class.open]="isMenuOpen">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false">Home</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        (click)="isMenuOpen = false">Home</a>
       <a routerLink="/shop" routerLinkActive="active" (click)="isMenuOpen = false">Shop</a>
       <a routerLink="/story" routerLinkActive="active" (click)="isMenuOpen = false">Our Story</a>
       <a routerLink="/blog" routerLinkActive="active" (click)="isMenuOpen = false">Blog</a>
@@ -13,7 +14,8 @@
       </div>
       <ng-template #mobileLoggedIn>
         <div class="mobile-only-auth">
-          <p style="margin-bottom: 1rem; color: #fff;">Hello, {{ (authService.user$ | async)?.displayName || 'User' }}</p>
+          <p style="margin-bottom: 1rem; color: var(--text-primary);">Hello, {{ (authService.user$ | async)?.displayName || 'User' }}
+          </p>
           <button class="btn-primary w-full" (click)="authService.logout(); isMenuOpen = false">Logout</button>
         </div>
       </ng-template>
@@ -34,13 +36,19 @@
         </div>
       </div>
 
-      <button *ngIf="(authService.user$ | async) === null" class="btn-primary desktop-only" routerLink="/login">Login</button>
+      <button *ngIf="(authService.user$ | async) === null" class="btn-primary desktop-only"
+        routerLink="/login">Login</button>
 
-      <div *ngIf="(authService.user$ | async) as user" class="desktop-only user-dropdown relative" style="display: flex; align-items: center; gap: 0.5rem; color: #fff; cursor: pointer;">
+      <div *ngIf="(authService.user$ | async) as user" class="desktop-only user-dropdown relative"
+        style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary); cursor: pointer;">
         <span class="material-icons">account_circle</span>
         <span style="font-size: 0.9rem;">{{ user.displayName || 'User' }}</span>
-        <button class="btn-secondary" style="margin-left: 10px; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: transparent; border: 1px solid #5a5a5a; color: #fff; border-radius: 4px; cursor: pointer;" (click)="authService.logout()">Logout</button>
+        <button class="btn-secondary"
+          style="margin-left: 10px; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; cursor: pointer;"
+          (click)="authService.logout()">Logout</button>
       </div>
+
+
 
       <button class="mobile-menu-toggle" (click)="toggleMenu()">
         <span class="material-icons">{{ isMenuOpen ? 'close' : 'menu' }}</span>
@@ -53,15 +61,8 @@
     <div class="search-container container">
       <div class="search-input-wrapper">
         <span class="material-icons search-icon">search</span>
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Search products, articles..."
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="onSearchInput()"
-          (keyup.escape)="closeSearch()"
-          autocomplete="off"
-        >
+        <input id="search-input" type="text" placeholder="Search products, articles..." [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchInput()" (keyup.escape)="closeSearch()" autocomplete="off">
         <span class="material-icons searching-spinner" *ngIf="isSearching">sync</span>
         <span class="material-icons close-icon" (click)="closeSearch()">close</span>
       </div>
@@ -82,14 +83,11 @@
         <!-- Results List -->
         <ng-container *ngIf="!isSearching && searchResults.length > 0">
           <div class="result-group-label">{{ searchResults.length }} result(s)</div>
-          <div
-            class="search-result-item"
-            *ngFor="let result of searchResults"
-            (click)="goToResult(result)"
-          >
+          <div class="search-result-item" *ngFor="let result of searchResults" (click)="goToResult(result)">
             <img [src]="result.image" [alt]="result.title" class="result-thumb">
             <div class="result-info">
-              <span class="result-type" [class.product]="result.type === 'product'" [class.post]="result.type === 'post'">
+              <span class="result-type" [class.product]="result.type === 'product'"
+                [class.post]="result.type === 'post'">
                 {{ result.type === 'product' ? 'Product' : 'Article' }}
               </span>
               <p class="result-title">{{ result.title }}</p>

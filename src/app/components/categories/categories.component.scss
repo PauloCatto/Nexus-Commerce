@@ -5,27 +5,27 @@
 h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   letter-spacing: -1px;
 }
 
 .arrow-btn {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: var(--radius-base);
   background-color: var(--bg-card);
-  color: #fff;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: var(--ui-border-width) solid var(--border-color);
 }
 
 .arrow-btn:hover {
   background-color: var(--primary-color);
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3), var(--ui-glow);
 }
 
 .categories-grid {
@@ -36,7 +36,7 @@ h2 {
 
 .category-card {
   background-color: var(--bg-card);
-  border-radius: 20px;
+  border-radius: var(--radius-card);
   height: 300px;
   display: flex;
   align-items: flex-end;
@@ -45,14 +45,14 @@ h2 {
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: var(--ui-shadow);
+  border: var(--ui-border-width) solid var(--border-color);
 }
 
 .category-card:hover {
   transform: translateY(-10px);
   border-color: var(--primary-color);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4), var(--ui-glow);
 }
 
 .category-img {

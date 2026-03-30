@@ -4,18 +4,21 @@ import { NotificationComponent } from './shared/notification/notification.compon
 import { AuthToastService } from './services/auth-toast.service';
 import { CommonModule } from '@angular/common';
 import { slideInAnimation } from './app.animations';
+import { BrandSwapperComponent } from './shared/brand-swapper/brand-swapper.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationComponent, CommonModule],
+  imports: [RouterOutlet, NotificationComponent, CommonModule, BrandSwapperComponent],
   animations: [slideInAnimation],
   template: `
     <app-notification></app-notification>
     <div [@routeAnimations]="prepareRoute(outlet)" class="route-container">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
+    <app-brand-swapper></app-brand-swapper>
   `,
+
   styles: [`
     .route-container {
       position: relative;

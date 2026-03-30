@@ -6,6 +6,6 @@ import { RouterModule } from '@angular/router';
   selector: 'app-dummy',
   imports: [CommonModule, RouterModule],
   templateUrl: './dummy.html',
-  styleUrl: './dummy.css',
+  styleUrl: './dummy.scss',
 })
-export class Dummy {}
+export class Dummy { }

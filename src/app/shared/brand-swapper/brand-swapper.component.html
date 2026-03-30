@@ -1,0 +1,44 @@
+<div class="swapper-container">
+  <button class="fab" (click)="togglePanel()" [class.active]="isOpen">
+    <span class="material-icons">{{ isOpen ? 'close' : 'palette' }}</span>
+  </button>
+
+  <div class="panel" *ngIf="isOpen" @slideInOut>
+    <div class="panel-header">
+      <h3>Brand Identity</h3>
+      <p>Customize your experience</p>
+    </div>
+
+    <div class="section first-section">
+      <label>Theme Preset</label>
+      <div class="preset-grid">
+        <div *ngFor="let preset of presets" 
+             class="preset-item" 
+             [class.active]="currentTheme === preset.name"
+             (click)="setTheme(preset.name)">
+          <div class="color-preview" [style.background]="preset.colors['--primary-color']"></div>
+          <span>{{ preset.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <label>Typography</label>
+      <div class="option-list">
+        <button (click)="setFont('modern')" [class.active]="currentFont === 'modern'">Modern Sans</button>
+        <button (click)="setFont('elegant')" [class.active]="currentFont === 'elegant'">Elegant Serif</button>
+        <button (click)="setFont('technical')" [class.active]="currentFont === 'technical'">Technical Mono</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <label>Interface Style</label>
+      <div class="style-controls">
+        <button (click)="setStyle('minimal')" [class.active]="currentStyle === 'minimal'">Minimal</button>
+        <button (click)="setStyle('glass')" [class.active]="currentStyle === 'glass'">Glass</button>
+        <button (click)="setStyle('bold')" [class.active]="currentStyle === 'bold'">Bold</button>
+      </div>
+    </div>
+
+  </div>
+</div>

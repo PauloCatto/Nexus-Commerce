@@ -11,7 +11,8 @@ import { Product } from '../../models/product.model';
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  styleUrls: ['./cart.component.scss']
+
 })
 export class CartComponent implements OnInit {
   cartItems: Product[] = [];

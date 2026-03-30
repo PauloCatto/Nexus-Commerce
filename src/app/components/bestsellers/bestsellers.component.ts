@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 
+import { Parallax3dDirective } from '../../shared/directives/parallax-3d.directive';
+
 @Component({
   selector: 'app-bestsellers',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, Parallax3dDirective],
   templateUrl: './bestsellers.component.html',
   styleUrl: './bestsellers.component.scss'
 })

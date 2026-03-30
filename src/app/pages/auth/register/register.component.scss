@@ -42,17 +42,17 @@
     font-size: 2.5rem;
     font-weight: 800;
     letter-spacing: -1px;
-    color: #fff;
+    color: var(--text-primary);
   }
 }
 
 .auth-card {
-  background: rgba(13, 18, 31, 0.6);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 32px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--ui-blur));
+  border: var(--ui-border-width) solid var(--border-color);
+  border-radius: var(--radius-card);
   padding: 3rem;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--ui-shadow);
 
   .card-header {
     text-align: center;
@@ -60,9 +60,10 @@
     
     h1 {
       font-size: 2.5rem;
-      font-weight: 900;
+      font-weight: 800;
       margin-bottom: 0.75rem;
       letter-spacing: -1.5px;
+      color: var(--primary-color);
     }
     
     p {
@@ -212,7 +213,11 @@
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 700;
-    &:hover { text-decoration: underline; }
+    transition: all 0.3s ease;
+    &:hover { 
+      color: var(--primary-hover);
+      text-decoration: underline; 
+    }
   }
 }
 

@@ -38,8 +38,9 @@ p {
   height: 500px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--border-color);
+  box-shadow: var(--ui-shadow);
+  border: var(--ui-border-width) solid var(--border-color);
+  backdrop-filter: blur(var(--ui-blur));
 }
 
 

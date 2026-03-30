@@ -44,21 +44,22 @@ h2 {
 
 .img-wrapper {
   background-color: var(--bg-card);
-  border-radius: 24px;
+  border-radius: var(--radius-card);
   aspect-ratio: 1 / 1;
   width: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: var(--ui-shadow);
+  border: var(--ui-border-width) solid var(--border-color);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(var(--ui-blur));
 }
 
 .product-card:hover .img-wrapper {
   border-color: var(--primary-color);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4), var(--ui-glow);
 }
 
 .product-img {

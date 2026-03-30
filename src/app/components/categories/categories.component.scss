@@ -5,21 +5,21 @@
 h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   letter-spacing: -1px;
 }
 
 .arrow-btn {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: var(--radius-base);
   background-color: var(--bg-card);
-  color: #fff;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
 }
 
 .arrow-btn:hover {
@@ -36,7 +36,7 @@ h2 {
 
 .category-card {
   background-color: var(--bg-card);
-  border-radius: 20px;
+  border-radius: var(--radius-card);
   height: 300px;
   display: flex;
   align-items: flex-end;
@@ -46,7 +46,7 @@ h2 {
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
 }
 
 .category-card:hover {

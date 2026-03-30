@@ -23,7 +23,7 @@ h2 {
   font-weight: 900;
   line-height: 1;
   letter-spacing: -3px;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 p {
@@ -34,13 +34,14 @@ p {
 }
 
 .elevate-image {
-  border-radius: 32px;
+  border-radius: var(--radius-card);
   height: 500px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
 }
+
 
 .elevate-image img {
   position: absolute;
@@ -85,7 +86,7 @@ p {
   .elevate-image {
     height: 400px;
     order: 1;
-    border-radius: 24px;
+    border-radius: var(--radius-card);
   }
 }
 

@@ -39,8 +39,8 @@
       </div>
 
       <ng-container *ngIf="!isLoadingProducts">
-        <div class="product-card-wrapper" *ngFor="let prod of filteredProducts">
-          <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card">
+        <div class="product-card-wrapper" *ngFor="let prod of filteredProducts; let i = index" [style.animation-delay]="i * 50 + 'ms'">
+          <a [routerLink]="['/product', prod.name.toLowerCase().split(' ').join('-')]" class="product-card" appParallax3d>
             <div class="img-wrapper">
               <img [src]="prod.image" [alt]="prod.name">
               <button class="favorite-btn" [class.active]="cartService.isInWishlist(prod.name)" (click)="toggleWishlist(prod, $event)">

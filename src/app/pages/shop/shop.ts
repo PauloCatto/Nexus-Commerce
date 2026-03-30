@@ -7,10 +7,12 @@ import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
+import { Parallax3dDirective } from '../../shared/directives/parallax-3d.directive';
+
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, Parallax3dDirective],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
 })

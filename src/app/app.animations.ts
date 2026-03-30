@@ -16,25 +16,33 @@ export const slideInAnimation = trigger('routeAnimations', [
                 top: 0,
                 left: 0,
                 width: '100%',
-                opacity: 0
+                opacity: 0,
+                zIndex: 2
             })
         ], { optional: true }),
         query(':enter', [
-            style({ opacity: 0, transform: 'scale(0.95) translateY(10px)' })
+            style({ 
+                opacity: 0, 
+                transform: 'scale(0.9) translateY(40px) perspective(1000px) rotateX(10deg)',
+                filter: 'blur(10px)'
+            })
         ], { optional: true }),
         group([
             query(':leave', [
-                animate('300ms ease-out', style({ 
+                animate('600ms cubic-bezier(0.16, 1, 0.3, 1)', style({ 
                     opacity: 0, 
-                    transform: 'scale(1.05) translateY(-10px)' 
+                    transform: 'scale(1.1) translateY(-40px) perspective(1000px) rotateX(-10deg)',
+                    filter: 'blur(15px)'
                 }))
             ], { optional: true }),
             query(':enter', [
-                animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ 
+                animate('800ms 200ms cubic-bezier(0.16, 1, 0.3, 1)', style({ 
                     opacity: 1, 
-                    transform: 'scale(1) translateY(0)' 
+                    transform: 'scale(1) translateY(0) rotateX(0deg)',
+                    filter: 'blur(0)'
                 }))
             ], { optional: true })
         ])
     ])
 ]);
+

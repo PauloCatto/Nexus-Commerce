@@ -10,7 +10,8 @@ import { StoryData } from '../../models/story.model';
   standalone: true,
   imports: [CommonModule, HeaderComponent, FooterComponent],
   templateUrl: './our-story.component.html',
-  styleUrl: './our-story.component.scss'
+  styleUrls: ['./our-story.component.scss']
+
 })
 export class OurStoryComponent implements OnInit {
   storyData: StoryData | null = null;

@@ -3,6 +3,7 @@ export interface UserProfile {
   email: string | null;
   theme?: string;
   fontFamily?: string;
-  borderRadius?: string;
+  interfaceStyle?: 'minimal' | 'glass' | 'bold';
   lastUpdated?: number;
 }
+

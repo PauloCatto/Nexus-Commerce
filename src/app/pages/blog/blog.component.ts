@@ -11,7 +11,8 @@ import { BlogPost } from '../../models/blog-post.model';
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './blog.component.html',
-  styleUrl: './blog.component.scss'
+  styleUrls: ['./blog.component.scss']
+
 })
 export class BlogComponent implements OnInit {
   posts: BlogPost[] = [];

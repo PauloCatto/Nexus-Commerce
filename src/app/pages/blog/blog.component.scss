@@ -48,18 +48,20 @@
 
 .post-card {
   background-color: var(--bg-card);
-  border-radius: 20px;
+  border-radius: var(--radius-card);
   overflow: hidden;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: var(--ui-border-width) solid var(--border-color);
+  box-shadow: var(--ui-shadow);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(var(--ui-blur));
 
   &:hover {
     transform: translateY(-10px);
     border-color: var(--primary-color);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), var(--ui-glow);
     
     .post-img {
       transform: scale(1.1);

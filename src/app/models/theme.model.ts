@@ -12,5 +12,7 @@ export interface ThemePreset {
     '--primary-hover': string;
     '--glass-bg': string;
     '--border-color': string;
+    '--primary-rgb': string;
   };
 }
+

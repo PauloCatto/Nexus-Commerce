@@ -12,7 +12,8 @@ import { Product } from '../../models/product.model';
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.scss'
+  styleUrls: ['./product-detail.component.scss']
+
 })
 export class ProductDetail implements OnInit {
   product: Product | null = null;

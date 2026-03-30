@@ -14,7 +14,8 @@ import { Parallax3dDirective } from '../../shared/directives/parallax-3d.directi
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, Parallax3dDirective],
   templateUrl: './shop.component.html',
-  styleUrl: './shop.component.scss'
+  styleUrls: ['./shop.component.scss']
+
 })
 export class Shop implements OnInit {
   activeCategory: string = 'All';

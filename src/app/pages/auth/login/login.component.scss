@@ -59,9 +59,10 @@
     
     h1 {
       font-size: 2.5rem;
-      font-weight: 900;
+      font-weight: 800;
       margin-bottom: 0.75rem;
       letter-spacing: -1.5px;
+      color: var(--primary-color); /* Contrast and Pop */
     }
     
     p {
@@ -257,7 +258,11 @@
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 700;
-    &:hover { text-decoration: underline; }
+    transition: all 0.3s ease;
+    &:hover { 
+      color: var(--primary-hover);
+      text-decoration: underline; 
+    }
   }
 }
 

@@ -38,18 +38,7 @@
   <!-- Form Section -->
   <section class="form-section container">
     <div class="form-wrapper">
-      <div class="form-header">
-        <h2>Send us a Message</h2>
-        <p>Fill out the form below and we'll get back to you within 24 hours.</p>
-      </div>
-
-      <div class="success-message" *ngIf="submitted">
-        <span class="material-icons done-icon">check_circle</span>
-        <h3>Message Sent Successfully!</h3>
-        <p>Thank you for reaching out. We'll be in touch soon.</p>
-      </div>
-
-      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!submitted">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="input-group">
             <input type="text" formControlName="name" placeholder="Full Name">
@@ -78,9 +67,9 @@
           <div class="error-msg" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.errors?.['minlength']">Min 10 characters.</div>
         </div>
 
-        <button type="submit" class="btn-primary" [disabled]="contactForm.invalid">
-          Send Message
-          <span class="material-icons">send</span>
+        <button type="submit" class="btn-primary" [disabled]="contactForm.invalid || (loadingService.isLoading$ | async)">
+          {{ (loadingService.isLoading$ | async) ? 'Sending...' : 'Send Message' }}
+          <span class="material-icons" *ngIf="!(loadingService.isLoading$ | async)">send</span>
         </button>
       </form>
     </div>

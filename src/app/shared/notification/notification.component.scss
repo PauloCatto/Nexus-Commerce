@@ -15,8 +15,8 @@ $duration-bar: 3s;
   pointer-events: none;
 
   @media (max-width: 480px) {
-    top: auto;
-    bottom: 1rem;
+    top: 1rem;
+    bottom: auto;
     right: 1rem;
     left: 1rem;
     width: auto;

@@ -1,0 +1,98 @@
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(var(--bg-primary-rgb, 10, 15, 26), 0.7);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.spinner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nexus-loader {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--primary-color);
+    animation: spin 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+
+    &:nth-child(2) {
+      width: 75%;
+      height: 75%;
+      border-top-color: #c084fc;
+      animation-duration: 2s;
+      animation-direction: reverse;
+    }
+
+    &:nth-child(3) {
+      width: 50%;
+      height: 50%;
+      border-top-color: var(--primary-color);
+      animation-duration: 1s;
+    }
+  }
+
+  .logo-peek {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    filter: drop-shadow(0 0 10px rgba(var(--primary-rgb), 0.6));
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+.loading-text {
+  display: flex;
+  gap: 0.35rem;
+  
+  .char {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--text-secondary);
+    animation: wave 1.4s ease-in-out infinite;
+    
+    @for $i from 1 through 7 {
+      &:nth-child(#{$i}) {
+        animation-delay: 0.1s * $i;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-5px); opacity: 1; color: var(--primary-color); }
+}

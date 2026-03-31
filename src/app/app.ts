@@ -1,7 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet, ChildrenOutletContexts } from '@angular/router';
+import { RouterOutlet, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { NotificationComponent } from './shared/notification/notification.component';
 import { AuthToastService } from './services/auth-toast.service';
+import { LoadingService } from './services/loading.service';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { slideInAnimation } from './app.animations';
 import { BrandSwapperComponent } from './shared/brand-swapper/brand-swapper.component';
@@ -9,9 +11,10 @@ import { BrandSwapperComponent } from './shared/brand-swapper/brand-swapper.comp
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationComponent, CommonModule, BrandSwapperComponent],
+  imports: [RouterOutlet, NotificationComponent, CommonModule, BrandSwapperComponent, SpinnerComponent],
   animations: [slideInAnimation],
   template: `
+    <app-spinner></app-spinner>
     <app-notification></app-notification>
     <div [@routeAnimations]="prepareRoute(outlet)" class="route-container">
       <router-outlet #outlet="outlet"></router-outlet>
@@ -30,12 +33,29 @@ import { BrandSwapperComponent } from './shared/brand-swapper/brand-swapper.comp
 export class App implements OnInit {
   title = 'nexus-commerce';
   private authToast = inject(AuthToastService);
+  private loadingService = inject(LoadingService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.authToast.init();
+    
+    // Global Navigation Loader Logic
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loadingService.setLoading(true);
+      } else if (
+        event instanceof NavigationEnd || 
+        event instanceof NavigationCancel || 
+        event instanceof NavigationError
+      ) {
+        // Small delay for smooth exit
+        setTimeout(() => this.loadingService.setLoading(false), 300);
+      }
+    });
   }
 
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }
+

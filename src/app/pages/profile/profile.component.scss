@@ -968,9 +968,20 @@
   }
 
   .profile-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     .tab {
-      padding: 0.8rem 1rem;
+      flex: unset;
+      padding: 0.75rem;
       font-size: 0.8rem;
+      justify-content: center;
 
       .material-icons {
         font-size: 1.1rem;

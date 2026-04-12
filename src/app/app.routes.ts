@@ -58,6 +58,12 @@ export const routes: Routes = [
     data: { animation: 'Checkout' } 
   },
   { 
+    path: 'profile', 
+    loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent), 
+    canActivate: [authGuard],
+    data: { animation: 'Profile' } 
+  },
+  { 
     path: 'login', 
     loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent),
     data: { animation: 'Login' } 

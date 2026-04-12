@@ -38,17 +38,15 @@ export class App implements OnInit {
 
   ngOnInit(): void {
     this.authToast.init();
-    
-    // Global Navigation Loader Logic
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.loadingService.setLoading(true);
       } else if (
-        event instanceof NavigationEnd || 
-        event instanceof NavigationCancel || 
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        // Small delay for smooth exit
         setTimeout(() => this.loadingService.setLoading(false), 300);
       }
     });

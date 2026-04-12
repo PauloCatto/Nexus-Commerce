@@ -165,7 +165,6 @@
 
     a {
       font-size: 1.5rem;
-      /* Reduced from 2rem */
       font-weight: 700;
       letter-spacing: -0.5px;
     }
@@ -219,7 +218,6 @@
   }
 }
 
-// Search overlay omitted for brevity but remains same as before
 .search-overlay {
   position: fixed;
   top: 0;
@@ -304,7 +302,6 @@
     }
   }
 
-  // --- Search Results Dropdown ---
   .search-results {
     margin-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);

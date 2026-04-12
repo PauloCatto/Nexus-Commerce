@@ -8,7 +8,6 @@ import { SearchResult } from '../models/search-result.model';
 export class SearchService {
   private firestore = inject(Firestore);
 
-  // Endpoint: busca produtos e posts no Firebase pelo termo
   async search(term: string): Promise<SearchResult[]> {
     if (!term || term.trim().length < 2) return [];
 

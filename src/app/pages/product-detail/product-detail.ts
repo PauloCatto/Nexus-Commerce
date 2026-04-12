@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { ProductReviewsComponent } from '../../components/product-reviews/product-reviews.component';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
@@ -10,7 +11,7 @@ import { Product } from '../../models/product.model';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, ProductReviewsComponent],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 
@@ -18,7 +19,7 @@ import { Product } from '../../models/product.model';
 export class ProductDetail implements OnInit {
   product: Product | null = null;
   selectedQuantity: number = 1;
-  isLoading = true;
+  isLoading: boolean = true;
 
   private productService = inject(ProductService);
   private cdr = inject(ChangeDetectorRef);

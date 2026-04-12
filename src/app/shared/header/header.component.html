@@ -14,9 +14,13 @@
       </div>
       <ng-template #mobileLoggedIn>
         <div class="mobile-only-auth">
-          <p style="margin-bottom: 1rem; color: var(--text-primary);">Hello, {{ (authService.user$ | async)?.displayName || 'User' }}
+          <p style="margin-bottom: 1rem; color: var(--text-primary);">Hello, {{ (authService.user$ | async)?.displayName
+            || 'User' }}
           </p>
-          <button class="btn-primary w-full" (click)="authService.logout(); isMenuOpen = false">Logout</button>
+          <button class="btn-primary w-full" routerLink="/profile" (click)="isMenuOpen = false"
+            style="margin-bottom: 0.75rem;">My Profile</button>
+          <button class="btn-primary w-full" (click)="authService.logout(); isMenuOpen = false"
+            style="background: transparent; border: 1px solid var(--border-color); color: var(--text-primary);">Logout</button>
         </div>
       </ng-template>
     </nav>
@@ -39,13 +43,53 @@
       <button *ngIf="(authService.user$ | async) === null" class="btn-primary desktop-only"
         routerLink="/login">Login</button>
 
-      <div *ngIf="(authService.user$ | async) as user" class="desktop-only user-dropdown relative"
-        style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary); cursor: pointer;">
-        <span class="material-icons">account_circle</span>
-        <span style="font-size: 0.9rem;">{{ user.displayName || 'User' }}</span>
-        <button class="btn-secondary"
-          style="margin-left: 10px; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 4px; cursor: pointer;"
-          (click)="authService.logout()">Logout</button>
+      <div *ngIf="(authService.user$ | async) as user" class="desktop-only profile-dropdown-wrapper">
+        <button class="profile-pill" (click)="toggleProfileDropdown($event)" [class.open]="isProfileDropdownOpen">
+          <span class="profile-pill-initial">{{ (user.displayName || user.email || 'U').charAt(0).toUpperCase()
+            }}</span>
+          <span class="profile-pill-name">{{ user.displayName || 'My Account' }}</span>
+          <span class="material-icons profile-pill-arrow">expand_more</span>
+        </button>
+        <div class="profile-dropdown" [class.open]="isProfileDropdownOpen">
+          <div class="dropdown-header">
+            <span class="dropdown-avatar-initial">{{ (user.displayName || user.email || 'U').charAt(0).toUpperCase()
+              }}</span>
+            <div class="dropdown-user-info">
+              <span class="dropdown-name">{{ user.displayName || 'User' }}</span>
+              <span class="dropdown-email">{{ user.email }}</span>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/profile" [queryParams]="{tab: 'overview'}"
+            (click)="closeProfileDropdown()">
+            <span class="material-icons">person</span>
+            My Profile
+          </a>
+          <a class="dropdown-item" routerLink="/profile" [queryParams]="{tab: 'orders'}"
+            (click)="closeProfileDropdown()">
+            <span class="material-icons">receipt_long</span>
+            My Orders
+          </a>
+          <a class="dropdown-item" routerLink="/profile" [queryParams]="{tab: 'reviews'}"
+            (click)="closeProfileDropdown()">
+            <span class="material-icons">star</span>
+            My Reviews
+          </a>
+          <a class="dropdown-item" routerLink="/wishlist" (click)="closeProfileDropdown()">
+            <span class="material-icons">favorite_border</span>
+            Wishlist
+          </a>
+          <a class="dropdown-item" routerLink="/profile" [queryParams]="{tab: 'settings'}"
+            (click)="closeProfileDropdown()">
+            <span class="material-icons">tune</span>
+            Settings
+          </a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout-item" (click)="authService.logout(); closeProfileDropdown()">
+            <span class="material-icons">logout</span>
+            Sign Out
+          </button>
+        </div>
       </div>
 
 
@@ -56,7 +100,6 @@
     </div>
   </div>
 
-  <!-- Search Overlay -->
   <div class="search-overlay" [class.active]="isSearchVisible">
     <div class="search-container container">
       <div class="search-input-wrapper">
@@ -67,20 +110,16 @@
         <span class="material-icons close-icon" (click)="closeSearch()">close</span>
       </div>
 
-      <!-- Results Dropdown -->
       <div class="search-results" *ngIf="searchTerm.length >= 2">
-        <!-- Searching -->
         <div class="search-status" *ngIf="isSearching">
           <span class="material-icons spin">sync</span> Searching Firebase...
         </div>
 
-        <!-- Empty State -->
         <div class="search-status empty" *ngIf="!isSearching && searchResults.length === 0">
           <span class="material-icons">search_off</span>
           No results found for "<strong>{{ searchTerm }}</strong>"
         </div>
 
-        <!-- Results List -->
         <ng-container *ngIf="!isSearching && searchResults.length > 0">
           <div class="result-group-label">{{ searchResults.length }} result(s)</div>
           <div class="search-result-item" *ngFor="let result of searchResults" (click)="goToResult(result)">

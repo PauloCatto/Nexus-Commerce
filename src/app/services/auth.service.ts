@@ -35,7 +35,6 @@ export class AuthService {
     return cred.user;
   }
 
-  // Login with Google
   async loginWithGoogle(): Promise<User> {
     const provider = new GoogleAuthProvider();
     const cred = await signInWithPopup(this.auth, provider);

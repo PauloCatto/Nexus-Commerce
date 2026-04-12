@@ -7,7 +7,7 @@
 .checkout-header {
   margin-bottom: 4rem;
   text-align: center;
-  
+
   .badge {
     background-color: rgba(139, 92, 246, 0.1);
     color: var(--primary-color);
@@ -27,7 +27,7 @@
     font-weight: 800;
     letter-spacing: -1.5px;
     margin-bottom: 1rem;
-    
+
     .highlight {
       background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
       -webkit-background-clip: text;
@@ -77,7 +77,7 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 3rem;
-  
+
   .tab-btn {
     flex: 1;
     background: rgba(255, 255, 255, 0.03);
@@ -92,7 +92,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     font-weight: 600;
-    
+
     .material-icons {
       font-size: 1.75rem;
       color: var(--text-secondary);
@@ -102,7 +102,7 @@
     &:hover {
       background: rgba(255, 255, 255, 0.05);
       border-color: rgba(255, 255, 255, 0.1);
-      
+
       .material-icons {
         transform: translateY(-2px);
       }
@@ -112,7 +112,7 @@
       background: rgba(139, 92, 246, 0.1);
       border-color: var(--primary-color);
       color: #fff;
-      
+
       .material-icons {
         color: var(--primary-color);
         transform: scale(1.1);
@@ -147,7 +147,8 @@
     margin-left: 0.5rem;
   }
 
-  input, select {
+  input,
+  select {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
@@ -164,12 +165,34 @@
       box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
     }
   }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+    color-scheme: dark;
+
+    option {
+      background: #1a1f2e;
+      color: #fff;
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+  }
 }
 
-// ─── Pix simulation ───
 .pix-simulation {
   text-align: center;
-  p { margin-bottom: 2rem; color: var(--text-secondary); }
+
+  p {
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+  }
 }
 
 .qr-code-wrapper {
@@ -184,7 +207,7 @@
 .pix-copy-wrapper {
   display: flex;
   gap: 0.5rem;
-  
+
   input {
     flex: 1;
     background: rgba(255, 255, 255, 0.03);
@@ -206,8 +229,10 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-    
-    &:hover { background: #7c3aed; }
+
+    &:hover {
+      background: #7c3aed;
+    }
   }
 }
 
@@ -226,7 +251,6 @@
   }
 }
 
-// ─── Order Summary ───
 .summary-items {
   display: flex;
   flex-direction: column;
@@ -234,9 +258,15 @@
   max-height: 400px;
   overflow-y: auto;
   padding-right: 0.5rem;
-  
-  &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 20px; }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+  }
 }
 
 .summary-item {
@@ -253,15 +283,33 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.5rem;
-  
-  img { width: 100%; height: 100%; object-fit: contain; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 .item-meta {
   flex: 1;
-  .name { font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
-  .meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
-  .price { font-weight: 700; color: var(--primary-color); }
+
+  .name {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .price {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
 }
 
 .summary-divider {
@@ -276,7 +324,7 @@
   margin-bottom: 1rem;
   color: var(--text-secondary);
   font-weight: 500;
-  
+
   &.total {
     margin-top: 1.5rem;
     font-size: 1.75rem;
@@ -286,7 +334,6 @@
   }
 }
 
-// ─── Success State ──────────────────────────────────────────────
 .success-state {
   text-align: center;
   padding: 6rem 3rem;
@@ -308,7 +355,7 @@
     justify-content: center;
     margin: 0 auto 3rem;
     position: relative;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -325,11 +372,20 @@
     }
   }
 
-  h2 { font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -2px; }
-  p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 3rem; }
+  h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -2px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+  }
 }
 
-// ─── Timeline ───
 .order-timeline {
   display: flex;
   align-items: center;
@@ -376,7 +432,10 @@
       border-color: var(--primary-color);
       box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
     }
-    .step-label { color: #fff; }
+
+    .step-label {
+      color: #fff;
+    }
   }
 }
 
@@ -400,7 +459,7 @@
   border-radius: 24px;
   margin-bottom: 3.5rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  
+
   .detail-row {
     display: flex;
     justify-content: space-between;
@@ -409,10 +468,18 @@
     font-size: 1.1rem;
     color: var(--text-secondary);
 
-    &:last-of-type { border-bottom: none; }
-    
-    .val { color: #fff; font-weight: 700; }
-    .highlight { color: var(--primary-color); }
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    .val {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .highlight {
+      color: var(--primary-color);
+    }
   }
 
   .email-notice {
@@ -441,20 +508,53 @@
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
-    &:hover { background: rgba(255, 255, 255, 0.05); border-color: #fff; }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #fff;
+    }
   }
 }
 
-// ─── Animations ──────────────────────────────────────────────────
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes pulse { 
-  0% { transform: scale(1); opacity: 0.3; } 
-  50% { transform: scale(1.1); opacity: 0.1; } 
-  100% { transform: scale(1); opacity: 0.3; } 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-// ─── Receipt Modal ──────────────────────────────────────────────
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+}
+
 .receipt-overlay {
   position: fixed;
   inset: 0;
@@ -468,7 +568,15 @@
   animation: fadeIn 0.4s ease;
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 
 .receipt-modal {
   background: #fff;
@@ -480,7 +588,7 @@
   padding: 3.5rem;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   font-family: 'Inter', sans-serif;
@@ -501,21 +609,32 @@
     font-size: 1.4rem;
     font-weight: 800;
     color: #111827;
-    .material-icons { color: #8b5cf6; font-size: 1.8rem; }
+
+    .material-icons {
+      color: #8b5cf6;
+      font-size: 1.8rem;
+    }
   }
 
   .receipt-meta {
     text-align: right;
-    h1 { 
-      font-size: 1.8rem; 
-      font-weight: 900; 
-      color: #111827; 
-      letter-spacing: 2px; 
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #111827;
+      letter-spacing: 2px;
       margin-bottom: 0.2rem;
       border-bottom: 3px solid #8b5cf6;
       display: inline-block;
     }
-    p { color: #6b7280; font-weight: 600; font-size: 0.85rem; margin-top: 0.5rem; }
+
+    p {
+      color: #6b7280;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
   }
 }
 
@@ -534,8 +653,17 @@
     margin-bottom: 0.4rem;
     letter-spacing: 0.5px;
   }
-  p { font-weight: 700; font-size: 1rem; color: #111827; line-height: 1.4; }
-  .align-right { text-align: right; }
+
+  p {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #111827;
+    line-height: 1.4;
+  }
+
+  .align-right {
+    text-align: right;
+  }
 }
 
 .receipt-table {
@@ -560,11 +688,25 @@
     vertical-align: middle;
   }
 
-  .item-name { font-weight: 700; color: #111827; font-size: 0.95rem; }
-  .item-cat { font-size: 0.75rem; color: #6b7280; margin-top: 0.2rem; }
+  .item-name {
+    font-weight: 700;
+    color: #111827;
+    font-size: 0.95rem;
+  }
 
-  .text-center { text-align: center; }
-  .text-right { text-align: right; }
+  .item-cat {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.2rem;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-right {
+    text-align: right;
+  }
 }
 
 .receipt-footer {
@@ -572,7 +714,7 @@
   justify-content: flex-end;
   border-top: 2px solid #f9fafb;
   padding-top: 1.5rem;
-  
+
   .footer-summary {
     width: 250px;
   }
@@ -619,14 +761,22 @@
     background: #111827;
     color: #fff;
     border: none;
-    &:hover { background: #000; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+
+    &:hover {
+      background: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
   }
 
   .btn-close-receipt {
     background: #f3f4f6;
     border: none;
     color: #4b5563;
-    &:hover { background: #e5e7eb; }
+
+    &:hover {
+      background: #e5e7eb;
+    }
   }
 }
 
@@ -635,15 +785,15 @@
     margin: 1.0cm;
     size: A4 portrait;
   }
-  
-  // Limpeza radical: esconde tudo o que não for o recibo
-  #root > *:not(.receipt-overlay),
-  app-header, app-footer, main > *:not(.receipt-overlay) {
+
+  #root>*:not(.receipt-overlay),
+  app-header,
+  app-footer,
+  main>*:not(.receipt-overlay) {
     display: none !important;
   }
-  
-  // Como bati no 'visibility' global antes, vamos restabelecer display none
-  body > *:not(.receipt-overlay) {
+
+  body>*:not(.receipt-overlay) {
     display: none !important;
   }
 
@@ -675,10 +825,21 @@
     visibility: visible !important;
   }
 
-  .receipt-actions, .no-print, .success-state, .checkout-wrapper {
+  .receipt-actions,
+  .no-print,
+  .success-state,
+  .checkout-wrapper {
     display: none !important;
   }
-  
-  .receipt-header { border-bottom: 2px solid #000 !important; margin-bottom: 2rem; }
-  .receipt-table th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .receipt-header {
+    border-bottom: 2px solid #000 !important;
+    margin-bottom: 2rem;
+  }
+
+  .receipt-table th {
+    background: #f0f0f0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }

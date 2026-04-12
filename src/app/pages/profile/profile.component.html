@@ -1,0 +1,292 @@
+<app-header></app-header>
+
+<main class="profile-page container">
+  <div class="profile-hero">
+    <div class="avatar-wrapper">
+      <div class="avatar avatar-initial">{{ userInitial }}</div>
+      <div class="online-badge"></div>
+    </div>
+    <div class="hero-info">
+      <h1>{{ user?.displayName || 'Nexus Member' }}</h1>
+      <p class="email">{{ user?.email }}</p>
+      <p class="member-since" *ngIf="memberSince">
+        <span class="material-icons">calendar_today</span>
+        Member since {{ memberSince }}
+      </p>
+    </div>
+  </div>
+
+  <nav class="profile-tabs">
+    <button class="tab" [class.active]="activeTab === 'overview'" (click)="setTab('overview')">
+      <span class="material-icons">dashboard</span>
+      Overview
+    </button>
+    <button class="tab" [class.active]="activeTab === 'orders'" (click)="setTab('orders')">
+      <span class="material-icons">receipt_long</span>
+      Orders
+      <span class="tab-count" *ngIf="orderCount > 0">{{ orderCount }}</span>
+    </button>
+    <button class="tab" [class.active]="activeTab === 'reviews'" (click)="setTab('reviews')">
+      <span class="material-icons">star</span>
+      Reviews
+      <span class="tab-count" *ngIf="reviewCount > 0">{{ reviewCount }}</span>
+    </button>
+    <button class="tab" [class.active]="activeTab === 'settings'" (click)="setTab('settings')">
+      <span class="material-icons">tune</span>
+      Settings
+    </button>
+  </nav>
+
+  <section class="tab-content" *ngIf="activeTab === 'overview'">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon orders-icon">
+          <span class="material-icons">local_shipping</span>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ orderCount }}</span>
+          <span class="stat-label">Orders</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon spent-icon">
+          <span class="material-icons">payments</span>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ totalSpent | currency }}</span>
+          <span class="stat-label">Total Spent</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon reviews-icon">
+          <span class="material-icons">rate_review</span>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ reviewCount }}</span>
+          <span class="stat-label">Reviews</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon wishlist-icon">
+          <span class="material-icons">favorite</span>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ wishlistCount }}</span>
+          <span class="stat-label">Wishlist</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block" *ngIf="orders.length > 0">
+      <div class="section-header">
+        <h2>Recent Orders</h2>
+        <button class="link-btn" (click)="setTab('orders')">View All <span
+            class="material-icons">arrow_forward</span></button>
+      </div>
+      <div class="order-preview-list">
+        <div class="order-preview" *ngFor="let order of orders.slice(0, 3)">
+          <div class="order-preview-left">
+            <span class="material-icons" [class]="getStatusClass(order.status)">{{ getStatusIcon(order.status) }}</span>
+            <div>
+              <p class="order-id">#{{ order.id.slice(0, 8) }}</p>
+              <p class="order-date">{{ order.createdAt | date:'mediumDate' }}</p>
+            </div>
+          </div>
+          <div class="order-preview-right">
+            <span class="order-total">{{ order.total | currency }}</span>
+            <span class="status-badge" [class]="getStatusClass(order.status)">{{ order.status | uppercase }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <a routerLink="/shop" class="action-card">
+        <span class="material-icons">storefront</span>
+        <span>Browse Shop</span>
+      </a>
+      <a routerLink="/wishlist" class="action-card">
+        <span class="material-icons">favorite_border</span>
+        <span>My Wishlist</span>
+      </a>
+      <a routerLink="/cart" class="action-card">
+        <span class="material-icons">shopping_cart</span>
+        <span>My Cart</span>
+      </a>
+      <button class="action-card" (click)="setTab('settings')">
+        <span class="material-icons">palette</span>
+        <span>Customize</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="tab-content" *ngIf="activeTab === 'orders'">
+    <div class="orders-list" *ngIf="orders.length > 0; else noOrders">
+      <div class="order-card" *ngFor="let order of orders" [class.expanded]="expandedOrderId === order.id">
+        <div class="order-header" (click)="toggleOrder(order.id)">
+          <div class="order-header-left">
+            <span class="material-icons order-status-icon" [class]="getStatusClass(order.status)">{{
+              getStatusIcon(order.status) }}</span>
+            <div class="order-meta">
+              <h3>Order #{{ order.id.slice(0, 8) }}</h3>
+              <p>{{ order.createdAt | date:'MMMM d, y · h:mm a' }}</p>
+            </div>
+          </div>
+          <div class="order-header-right">
+            <div class="order-summary-info">
+              <span class="status-badge" [class]="getStatusClass(order.status)">{{ order.status | uppercase }}</span>
+              <span class="order-total-value">{{ order.total | currency }}</span>
+            </div>
+            <span class="material-icons expand-icon">{{ expandedOrderId === order.id ? 'expand_less' : 'expand_more'
+              }}</span>
+          </div>
+        </div>
+
+        <div class="order-body" *ngIf="expandedOrderId === order.id">
+          <div class="order-items-grid">
+            <div class="order-item" *ngFor="let item of order.items">
+              <div class="order-item-thumb">
+                <img [src]="item.image" [alt]="item.name">
+              </div>
+              <div class="order-item-info">
+                <p class="item-name">{{ item.name }}</p>
+                <p class="item-detail">{{ item.category }} · Qty: {{ item.quantity || 1 }}</p>
+              </div>
+              <p class="item-price">{{ (item.price | number:'1.2-2') }}</p>
+            </div>
+          </div>
+          <div class="order-footer-info">
+            <div class="info-chip">
+              <span class="material-icons">{{ getPaymentIcon(order.paymentMethod) }}</span>
+              {{ order.paymentMethod | uppercase }}
+              <span *ngIf="order.installments && order.installments > 1"> · {{ order.installments }}x</span>
+            </div>
+            <div class="info-chip">
+              <span class="material-icons">shopping_bag</span>
+              {{ order.items.length }} item(s)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noOrders>
+      <div class="empty-state">
+        <div class="glow-icon">
+          <span class="material-icons">receipt_long</span>
+        </div>
+        <h2>No orders yet</h2>
+        <p>Your purchase history will appear here once you place your first order.</p>
+        <a routerLink="/shop" class="btn-primary">Start Shopping</a>
+      </div>
+    </ng-template>
+  </section>
+
+  <section class="tab-content" *ngIf="activeTab === 'reviews'">
+    <div class="reviews-list" *ngIf="reviews.length > 0; else noReviews">
+      <div class="review-card" *ngFor="let review of reviews">
+        <div class="review-card-header">
+          <a [routerLink]="['/product', review.productName.toLowerCase().split(' ').join('-')]"
+            class="review-product-name">
+            {{ review.productName }}
+          </a>
+          <div class="review-stars">
+            <span class="material-icons star" *ngFor="let s of getRatingStars(review.rating)" [class.filled]="s === 1">
+              {{ s === 1 ? 'star' : 'star_border' }}
+            </span>
+          </div>
+        </div>
+        <p class="review-comment">{{ review.comment }}</p>
+        <p class="review-date">{{ review.createdAt?.toDate ? (review.createdAt.toDate() | date:'mediumDate') :
+          (review.createdAt | date:'mediumDate') }}</p>
+      </div>
+    </div>
+
+    <ng-template #noReviews>
+      <div class="empty-state">
+        <div class="glow-icon">
+          <span class="material-icons">rate_review</span>
+        </div>
+        <h2>No reviews yet</h2>
+        <p>Share your thoughts on products you've purchased.</p>
+        <a routerLink="/shop" class="btn-primary">Browse Products</a>
+      </div>
+    </ng-template>
+  </section>
+
+  <section class="tab-content" *ngIf="activeTab === 'settings'">
+    <div class="settings-section">
+      <h2 class="settings-title">
+        <span class="material-icons">person</span>
+        Profile Info
+      </h2>
+      <div class="settings-card">
+        <div class="form-group">
+          <label>Display Name</label>
+          <div class="input-row">
+            <input type="text" [(ngModel)]="displayName" placeholder="Your display name">
+            <button class="btn-primary btn-sm" [disabled]="isUpdatingProfile" (click)="updateDisplayName()">
+              {{ isUpdatingProfile ? 'Saving...' : 'Save' }}
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" [value]="user?.email || ''" readonly class="readonly-input">
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2 class="settings-title">
+        <span class="material-icons">palette</span>
+        Theme
+      </h2>
+      <div class="theme-grid">
+        <button class="theme-option" *ngFor="let preset of themePresets" [class.active]="currentTheme === preset.name"
+          (click)="selectTheme(preset.name)">
+          <div class="theme-preview">
+            <div class="preview-dot" [style.background]="preset.colors['--primary-color']"></div>
+            <div class="preview-bar" [style.background]="preset.colors['--bg-primary']"></div>
+          </div>
+          <span class="theme-label">{{ preset.label }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2 class="settings-title">
+        <span class="material-icons">text_fields</span>
+        Typography
+      </h2>
+      <div class="font-grid">
+        <button class="font-option" *ngFor="let font of fonts" [class.active]="currentFont === font.value"
+          [style.font-family]="font.value" (click)="selectFont(font.value)">
+          {{ font.label }}
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2 class="settings-title">
+        <span class="material-icons">auto_awesome</span>
+        Interface Style
+      </h2>
+      <div class="style-grid">
+        <button class="style-option" *ngFor="let s of ['minimal', 'glass', 'bold']" [class.active]="currentStyle === s"
+          (click)="selectStyle($any(s))">
+          <span class="style-name">{{ s | titlecase }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-section danger-zone">
+      <button class="btn-logout" (click)="logout()">
+        <span class="material-icons">logout</span>
+        Sign Out
+      </button>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

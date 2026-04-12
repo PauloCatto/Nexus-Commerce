@@ -44,12 +44,17 @@
           Add to Cart
           <span class="material-icons">shopping_cart</span>
         </button>
-        <button class="btn-outline favorite-btn-square" [class.active]="cartService.isInWishlist(product.name)" (click)="toggleWishlist()" [title]="cartService.isInWishlist(product.name) ? 'Remove from Wishlist' : 'Add to Wishlist'">
-          <span class="material-icons">{{ cartService.isInWishlist(product.name) ? 'favorite' : 'favorite_border' }}</span>
+        <button class="btn-outline favorite-btn-square" [class.active]="cartService.isInWishlist(product.name)"
+          (click)="toggleWishlist()"
+          [title]="cartService.isInWishlist(product.name) ? 'Remove from Wishlist' : 'Add to Wishlist'">
+          <span class="material-icons">{{ cartService.isInWishlist(product.name) ? 'favorite' : 'favorite_border'
+            }}</span>
         </button>
       </div>
     </div>
   </div>
+
+  <app-product-reviews [productName]="product.name"></app-product-reviews>
 </main>
 
 <app-footer></app-footer>

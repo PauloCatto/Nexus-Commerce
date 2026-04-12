@@ -1,4 +1,4 @@
-import { Component, inject, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import { SearchResult } from '../../models/search-result.model';
 export class HeaderComponent {
   isSearchVisible: boolean = false;
   isMenuOpen: boolean = false;
+  isProfileDropdownOpen: boolean = false;
   searchTerm: string = '';
   searchResults: SearchResult[] = [];
   isSearching: boolean = false;
@@ -30,6 +31,24 @@ export class HeaderComponent {
   private cdr = inject(ChangeDetectorRef);
 
   constructor() { }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.profile-dropdown-wrapper')) {
+      this.isProfileDropdownOpen = false;
+    }
+  }
+
+  toggleProfileDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+  }
+
+  closeProfileDropdown(): void {
+    this.isProfileDropdownOpen = false;
+  }
 
   toggleSearch(): void {
     this.isSearchVisible = !this.isSearchVisible;

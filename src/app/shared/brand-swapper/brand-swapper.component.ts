@@ -27,7 +27,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class BrandSwapperComponent {
   private themeService = inject(ThemeService);
   private elementRef = inject(ElementRef);
-  
+
   isOpen = false;
   presets = this.themeService.getPresets();
   currentTheme = 'midnight';
@@ -42,9 +42,8 @@ export class BrandSwapperComponent {
 
   constructor() {
     this.themeService.currentTheme$.subscribe(theme => this.currentTheme = theme);
-    
+
     this.themeService.currentFont$.subscribe(font => {
-      // Map back to key
       const key = Object.keys(this.fontMap).find(k => this.fontMap[k] === font);
       if (key) this.currentFont = key;
     });
@@ -54,8 +53,8 @@ export class BrandSwapperComponent {
     });
   }
 
-  togglePanel() { 
-    this.isOpen = !this.isOpen; 
+  togglePanel() {
+    this.isOpen = !this.isOpen;
   }
 
   @HostListener('document:click', ['$event'])
@@ -65,8 +64,8 @@ export class BrandSwapperComponent {
     }
   }
 
-  setTheme(name: string) { 
-    this.themeService.setTheme(name); 
+  setTheme(name: string) {
+    this.themeService.setTheme(name);
   }
 
   setFont(key: string) {

@@ -102,8 +102,4 @@ export class HeaderComponent {
     this.searchResults = [];
     this.isSearching = false;
   }
-
-  hasValidPhoto(user: any): boolean {
-    return user?.photoURL && user.photoURL.startsWith('http');
-  }
 }

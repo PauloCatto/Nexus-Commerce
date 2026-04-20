@@ -1,59 +1,46 @@
-# NexusCommerce
+# 🪐 Nexus Commerce | Elite E-Commerce Architecture
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+Nexus Commerce is an advanced, high-performance web platform built on **Angular 18**. This platform implements a modern `standalone-components` architecture focusing on robust state management, premium UI aesthetics, and frictionless user flows.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🎯 Architecture Overview
 
-```bash
-ng serve
-```
+* **Zero-Latency Interactions:** Deep integration with `NgZone` and Angular reactive strategies (RxJS) to ensure instant state updates, circumventing standard browser event-loop drops.
+* **Firebase Identity & Auth:** Secure robust authentication system linked dynamically. Custom tooltips handle explicit `invalid-credential` errors precisely during async operations.
+* **Premium Glassmorphism UI:** Sophisticated micro-animations configured via strictly modular SCSS for high visual appeal without performance penalties.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### ⚙️ Main Modules
+- `Core`: Services and State Managers
+- `Features`: Login flows, Product Cart logic, User identity
+- `Shared/UI`: Reusable standalone layout elements
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠️ Technological Stack
 
-```bash
-ng generate component component-name
-```
+| System | Technology | Role |
+| :--- | :--- | :--- |
+| **Framework** | Angular 18 | `standalone: true`, RxJS |
+| **Authentication** | Firebase / GoTrue | Identity and JWT Auth |
+| **Styling** | SCSS | Glassmorphism, Responsive CSS Grid |
+| **Data Transfer** | Fetch/Observables| Stream handling |
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🔥 Getting Started
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run the platform locally:
 
 ```bash
-ng test
+# 1. Install Dependencies
+npm install
+
+# 2. Fire up the local server
+npm start
 ```
+*Wait for the compiler to bundle. The application will run smoothly at `http://localhost:4200/`.*
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+*Engineered with 💡 and modern web mechanics for maximum UX throughput.*

@@ -1,5 +1,7 @@
 # 🪐 Nexus Commerce | Elite E-Commerce Architecture
 
+**Live Demo:** [https://nexus-commerce-beta.vercel.app/](https://nexus-commerce-beta.vercel.app/)
+
 Nexus Commerce is an advanced, high-performance web platform built on **Angular 18**. This platform implements a modern `standalone-components` architecture focusing on robust state management, premium UI aesthetics, and frictionless user flows.
 
 ---

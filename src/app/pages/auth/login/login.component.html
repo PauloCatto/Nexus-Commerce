@@ -59,8 +59,10 @@
           <span class="material-icons">arrow_forward</span>
         </button>
 
-        <div *ngIf="errorMessage" class="error-message" style="color: #ff4d4d; margin-top: 10px; text-align: center;">
-          {{ errorMessage }}
+        <div *ngIf="errorMessage" class="error-tooltip-container">
+          <span class="material-icons tooltip-icon">error_outline</span>
+          <span class="tooltip-label">Authentication Failed</span>
+          <div class="custom-tooltip">{{ errorMessage }}</div>
         </div>
 
         <div class="social-login">

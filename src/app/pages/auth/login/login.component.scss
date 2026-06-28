@@ -101,19 +101,25 @@
 
     input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 16px;
       padding: 1rem 1rem 1rem 3rem;
       color: #fff;
       font-size: 1rem;
       font-weight: 500;
       transition: all 0.3s;
+      outline: none;
       
+      &:hover {
+        background: rgba(255, 255, 255, 0.09);
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+
       &:focus {
-        background: rgba(139, 92, 246, 0.05);
+        background: rgba(139, 92, 246, 0.1);
         border-color: var(--primary-color);
-        box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2), 0 0 20px rgba(139, 92, 246, 0.15);
         
         & + .material-icons {
           color: var(--primary-color);
@@ -121,7 +127,7 @@
       }
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.35);
       }
     }
   }

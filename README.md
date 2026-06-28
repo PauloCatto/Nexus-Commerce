@@ -1,48 +1,48 @@
-# 🪐 Nexus Commerce | Elite E-Commerce Architecture
+# 🪐 Nexus Commerce | Arquitetura E-Commerce de Elite
 
-**Live Demo:** [https://nexus-commerce-beta.vercel.app/](https://nexus-commerce-beta.vercel.app/)
+**Demo ao vivo:** [https://nexus-commerce-beta.vercel.app/](https://nexus-commerce-beta.vercel.app/)
 
-Nexus Commerce is an advanced, high-performance web platform built on **Angular 18**. This platform implements a modern `standalone-components` architecture focusing on robust state management, premium UI aesthetics, and frictionless user flows.
-
----
-
-## 🎯 Architecture Overview
-
-* **Zero-Latency Interactions:** Deep integration with `NgZone` and Angular reactive strategies (RxJS) to ensure instant state updates, circumventing standard browser event-loop drops.
-* **Firebase Identity & Auth:** Secure robust authentication system linked dynamically. Custom tooltips handle explicit `invalid-credential` errors precisely during async operations.
-* **Premium Glassmorphism UI:** Sophisticated micro-animations configured via strictly modular SCSS for high visual appeal without performance penalties.
-
-### ⚙️ Main Modules
-- `Core`: Services and State Managers
-- `Features`: Login flows, Product Cart logic, User identity
-- `Shared/UI`: Reusable standalone layout elements
+O Nexus Commerce é uma plataforma web avançada e de alto desempenho construída com **Angular 18**. A plataforma implementa uma arquitetura moderna de `standalone-components`, com foco em gerenciamento de estado robusto, estética de UI premium e fluxos de usuário sem fricção.
 
 ---
 
-## 🛠️ Technological Stack
+## 🎯 Visão Geral da Arquitetura
 
-| System | Technology | Role |
+* **Interações de Baixa Latência:** Integração profunda com `NgZone` e estratégias reativas do Angular (RxJS) para garantir atualizações de estado instantâneas, contornando quedas comuns no event-loop do navegador.
+* **Identidade e Auth com Firebase:** Sistema de autenticação seguro e robusto com vinculação dinâmica. Tooltips customizados tratam erros explícitos de `invalid-credential` com precisão durante operações assíncronas.
+* **UI Premium com Glassmorphism:** Micro-animações sofisticadas configuradas via SCSS estritamente modular, para alto apelo visual sem penalidades de performance.
+
+### ⚙️ Módulos Principais
+- `Core`: Serviços e Gerenciadores de Estado
+- `Features`: Fluxos de Login, lógica do Carrinho de Produtos, Identidade do Usuário
+- `Shared/UI`: Elementos de layout standalone reutilizáveis
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Sistema | Tecnologia | Função |
 | :--- | :--- | :--- |
 | **Framework** | Angular 18 | `standalone: true`, RxJS |
-| **Authentication** | Firebase / GoTrue | Identity and JWT Auth |
-| **Styling** | SCSS | Glassmorphism, Responsive CSS Grid |
-| **Data Transfer** | Fetch/Observables| Stream handling |
+| **Autenticação** | Firebase / GoTrue | Identidade e Auth com JWT |
+| **Estilização** | SCSS | Glassmorphism, CSS Grid Responsivo |
+| **Transferência de Dados** | Fetch / Observables | Manipulação de streams |
 
 ---
 
-## 🔥 Getting Started
+## 🔥 Como Executar
 
-Run the platform locally:
+Rode a plataforma localmente:
 
 ```bash
-# 1. Install Dependencies
+# 1. Instalar dependências
 npm install
 
-# 2. Fire up the local server
+# 2. Iniciar o servidor local
 npm start
 ```
-*Wait for the compiler to bundle. The application will run smoothly at `http://localhost:4200/`.*
+*Aguarde o compilador fazer o bundle. A aplicação estará disponível em `http://localhost:4200/`.*
 
 ---
 
-*Engineered with 💡 and modern web mechanics for maximum UX throughput.*
+*Desenvolvido com 💡 e mecânicas modernas da web para máxima experiência do usuário.*
